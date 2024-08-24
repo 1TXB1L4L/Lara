@@ -17,9 +17,4 @@ class Ward extends Model
         'ward_capacity',
         'ward_status',
     ];
-
-    protected $casts = [
-        'ward_capacity' => 'integer', // or 'float' if it should be a decimal
-        'ward_status' => 'boolean',
-    ];
 }

@@ -27,4 +27,3 @@ Route::middleware([
 // Route::get('wards/{wId}', [WardController::class, 'show'])->name('wards.show');
 
 Route::resource('wards', App\Http\Controllers\WardController::class);
-Route::get('wards/{wId}/delete', [App\Http\ControllersWardController::class, 'destroy'])->with('wID')->name('wards.destroy');

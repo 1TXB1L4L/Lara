@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('ward_name');
             $table->string('ward_description')->nullable();
-            $table->string('ward_capacity')->nullable();
-            $table->boolean('ward_status')->default(1)->comment('1=active, 0=inactive');
+            $table->integer('ward_capacity')->nullable();
+            $table->boolean('ward_status')->default(1)->comment('1=Active, 0=Inactive');
             $table->timestamps();
         });
     }

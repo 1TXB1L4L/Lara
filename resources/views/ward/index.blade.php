@@ -37,8 +37,13 @@
                             <td class="py-3 px-6 text-left">{{ $ward->ward_capacity }}</td>
                             <td class="py-3 px-6 text-left">{{ $ward->ward_status ? 'Active' : 'Inactive' }}</td>
                             <td class="py-3 px-6 text-center">
-                                <a href="{{ route('wards.edit', $ward->id) }}" class="text-blue-500 hover:underline">Edit</a>
-                                <a href="{{ route('wards/'.$ward->id.'/delete) }}" class="text-red-500 hover:underline">Delete</a>
+                                <a href="{{ route('wards.edit', $ward->id) }}" class="text-blue-500 hover:underline">Edit</a> |
+                                <a href="{{ route('wards.show', $ward->id) }}" class="text-yellow-500 hover:underline font-bold">Show</a> |
+                                <form action="{{ route('wards.destroy', $ward->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:underline">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
