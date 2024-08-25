@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Create Medicine Record</title>
-</head>
+    </head>
 
 <body class="h-full">
     <div class="container p-24 mx-auto">
@@ -154,6 +154,8 @@
             </div>
         </form>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
 </body>
 
 </html>

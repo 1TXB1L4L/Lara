@@ -12,6 +12,13 @@
     <div class="container">
         <div class="h-10 bg-blue-500 w-full mb-4">
             <div class="container p-24 mx-auto">
+                                       <!-- session message -->
+                                       @if(session('status'))
+            <!-- message will disappear after 3 seconds after page load -->
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+                <p>{{ session('status') }}</p>
+            </div>
+            @endif
                 <h1 class="text-2xl font-bold text-center mb-4">Wards</h1>
                 <a href="{{ route('wards.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New Ward</a>
                 <br />

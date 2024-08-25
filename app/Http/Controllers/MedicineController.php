@@ -54,9 +54,7 @@ class MedicineController extends Controller
             $name = time() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/images/medicines');
             $image->move($destinationPath, $name);
-        } else {
-            $name = null;
-        };
+        } 
 
         Medicine::create([
             'med_name' => $request->med_name,
@@ -73,7 +71,7 @@ class MedicineController extends Controller
             'med_category' => $request->med_category,
             'med_manufacturer' => $request->med_manufacturer,
             'med_status' => $request->med_status == true ? 1 : 0,
-            'med_image' => $destinationPath . '/' . $name,
+            'med_image' => $name,
         ]);
 
         return redirect('/medicines')->with('status', 'Medicine created successfully.');
