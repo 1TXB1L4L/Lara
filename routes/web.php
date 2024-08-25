@@ -27,3 +27,4 @@ Route::middleware([
 // Route::get('wards/{wId}', [WardController::class, 'show'])->name('wards.show');
 
 Route::resource('wards', App\Http\Controllers\WardController::class);
+Route::resource('medicines', App\Http\Controllers\MedicineController::class);
