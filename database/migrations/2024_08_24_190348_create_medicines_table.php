@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('med_generic_name')->required();
             $table->integer('med_quantity')->nullable();
             $table->integer('med_price')->nullable()->default(0);
+            $table->string('med_batch_no')->nullable();
             $table->string('med_dosage')->nullable();
             $table->string('med_strength')->nullable();
             $table->string('med_route')->nullable();
@@ -31,7 +32,6 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
@@ -40,7 +40,3 @@ return new class extends Migration
         Schema::dropIfExists('medicines');
     }
 };
-
-// is date('med_expiry_date') correct? Should it be date('med_expiry_date')?
-// Should it be date('med_expiry_date')->nullable();?
-// answer: date('med_expiry_date') is incorrect. It should be $table->date('med_expiry_date')->nullable();.

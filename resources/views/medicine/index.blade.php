@@ -16,11 +16,11 @@
             <!-- session message -->
             @if(session('status'))
             <!-- message will disappear after 3 seconds after page load -->
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+            <div id="alert-message" class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
                 <p>{{ session('status') }}</p>
             </div>
             @endif
-                <h1 class="text-2xl font-bold text-center mb-4">Wards</h1>
+                <h1 class="text-2xl font-bold text-center mb-4">Medicine List</h1>
                 <a href="{{ route('medicines.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New Medicine</a>
                 <br />
                 <br />
@@ -42,11 +42,23 @@
                         <tr class="border-b">
                             <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
                             <td class="py-3 px-6 text-left">{{ $medicine->med_name }}</td>
-                            <td class="py-3 px-6 text-left">{{ $medicine->med_status }}</td>
+                            @if($medicine->med_status == 0)
+                            <td class="py-3 px-6 text-left">Inactive</td>
+                            @else
+                            <td class="py-3 px-6 text-left">Active</td>
+                            @endif
                             <td class="py-3 px-6 text-center">{{ $medicine->med_generic_name }}</td>
                             <td class="py-3 px-6 text-center">{{ $medicine->med_quantity }}</td>
                             <!-- rounded image -->
-                            <td class="py-3 px-6 text-center"><img src="{{ asset('$medicine->med_image') }}" alt="Image" width="100" height="100" class="rounded-full"></td>
+                            @if($medicine->med_image != null)
+                            <td class="py-3 px-6 text-center">
+                                <img src="{{ asset($medicine->med_image) }}" class="rounded-full h-12 w-12" />
+                            </td>
+                            @else
+                            <td class="py-3 px-6 text-center">
+                            <img src="{{ asset('images/no-image.jpeg') }}" class="rounded-full h-12 w-12" />
+                            </td>
+                            @endif
                             <td class="py-3 px-6 text-center">
                                 <a href="{{ route('medicines.edit', $medicine->id) }}" class="text-blue-500 hover:underline">Edit</a> |
                                 <a href="{{ route('medicines.show', $medicine->id) }}" class="text-yellow-500 hover:underline font-bold">Show</a> |
@@ -62,6 +74,21 @@
                 </table>
             </div>
         </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Find the alert message element
+        var alertMessage = document.getElementById('alert-message');
+
+        // Check if the alert message element exists
+        if (alertMessage) {
+            // Set a timeout to hide the alert message after 5 seconds (5000 milliseconds)
+            setTimeout(function() {
+                alertMessage.style.opacity = 0;
+                alertMessage.style.transition = 'opacity 0.4s'; // Optional: fade out effect
+            }, 4000);
+        }
+    });
+</script>
 </body>
 
 </html>

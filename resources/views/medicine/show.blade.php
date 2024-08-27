@@ -50,7 +50,7 @@
                     </tr>
                     <tr>
                         <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Expiry Date</td>
-                        <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100">{{ $medicine->med_expiry_date }}</td>
+                        <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100"> {{ \Carbon\Carbon::parse($medicine->med_expiry_date)->format('d/m/Y') }} </td>
                     </tr>
                     <tr>
                         <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Therapeutic Class</td>
@@ -66,11 +66,11 @@
                     </tr>
                     <tr>
                         <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Category</td>
-                        <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100">{{ $medicine->category->med_category_name }}</td>
+                        <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100">{{ $medicine->med_category }}</td>
                     </tr>
                     <tr>
                         <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Route</td>
-                        <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100">{{ $medicine->route->med_route }}</td>
+                        <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100">{{ $medicine->med_route }}</td>
                     </tr>
                     <tr>
                         <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Status</td>
@@ -78,7 +78,11 @@
                     </tr>
                     <tr>
                         <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Image</td>
-                        <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100"><img src="{{ asset('storage/'.$medicine->med_image) }}" alt="Image" width="100" height="100"></td>
+                        @if ($medicine->med_image == null)
+                            <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100"><img src="{{ asset('images/no-image.jpeg') }}" alt="No Image" width="100" height="100"></td>
+                        @else
+                        <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100 rounded-full"><img src="{{ asset($medicine->med_image) }}" alt="Image" width="100" height="100" class="rounded-full"></td>
+                        @endif
                     </tr>
                 </table>
             </div>

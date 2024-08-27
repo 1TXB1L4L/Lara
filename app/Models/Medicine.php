@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Medicine extends Model
 {
@@ -17,6 +18,7 @@ class Medicine extends Model
         'med_generic_name',
         'med_quantity',
         'med_price',
+        'med_batch_no',
         'med_dosage',
         'med_strength',
         'med_route',

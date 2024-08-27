@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Medicine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class MedicineController extends Controller
 {
@@ -37,24 +39,29 @@ class MedicineController extends Controller
             'med_generic_name' => 'required|string|max:255',
             'med_quantity' => 'nullable|integer',
             'med_price' => 'nullable|integer',
+            'med_batch_no' => 'nullable|string|max:255',
             'med_dosage' => 'nullable|string|max:255',
             'med_strength' => 'nullable|string|max:255',
             'med_route' => 'nullable|string|max:255',
             'med_therapeutic_class' => 'nullable|string|max:255',
             'med_notes' => 'nullable|string|max:255',
-            'med_expiry_date' => 'nullable|date',
+            'med_expiry_date' => 'date|nullable',
             'med_category' => 'nullable|string|max:255',
             'med_manufacturer' => 'nullable|string|max:255',
             'med_status' => 'nullable|boolean',
             'med_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+
+        $path = null;
+        $filename = null;
         if ($request->hasFile('med_image')) {
-            $image = $request->file('med_image');
-            $name = time() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/images/medicines');
-            $image->move($destinationPath, $name);
-        } 
+            $file = $request->file('med_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = 'uploads/medicines/';
+            $file->move($path, $filename);
+        }
 
         Medicine::create([
             'med_name' => $request->med_name,
@@ -62,6 +69,7 @@ class MedicineController extends Controller
             'med_generic_name' => $request->med_generic_name,
             'med_quantity' => $request->med_quantity,
             'med_price' => $request->med_price,
+            'med_batch_no' => $request->med_batch_no,
             'med_dosage' => $request->med_dosage,
             'med_strength' => $request->med_strength,
             'med_route' => $request->med_route,
@@ -70,8 +78,8 @@ class MedicineController extends Controller
             'med_expiry_date' => $request->med_expiry_date,
             'med_category' => $request->med_category,
             'med_manufacturer' => $request->med_manufacturer,
-            'med_status' => $request->med_status == true ? 1 : 0,
-            'med_image' => $name,
+            'med_status' => $request->has('med_status') ? 1 : 0,
+            'med_image' => $path . $filename,
         ]);
 
         return redirect('/medicines')->with('status', 'Medicine created successfully.');
@@ -104,29 +112,35 @@ class MedicineController extends Controller
             'med_generic_name' => 'required|string|max:255',
             'med_quantity' => 'nullable|integer',
             'med_price' => 'nullable|integer',
+            'med_batch_no' => 'nullable|string|max:255',
             'med_dosage' => 'nullable|string|max:255',
             'med_strength' => 'nullable|string|max:255',
             'med_route' => 'nullable|string|max:255',
             'med_therapeutic_class' => 'nullable|string|max:255',
             'med_notes' => 'nullable|string|max:255',
-            'med_expiry_date' => 'required|date',
+            'med_expiry_date' => 'nullable|date',
             'med_category' => 'nullable|string|max:255',
             'med_manufacturer' => 'nullable|string|max:255',
             'med_status' => 'nullable|boolean',
             'med_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        // Use the existing image if no new image is uploaded
+
+        $path = $medicine->med_image;
+        $filename = null;
+
         if ($request->hasFile('med_image')) {
-            $image = $request->file('med_image');
-            $name = time() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/images/medicines');
-            $image->move($destinationPath, $name);
-        } else {
-            $name = null;
-        };
-
-
-        $destinationPath = public_path('/images/medicines');
+            $file = $request->file('med_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = 'uploads/medicines/';
+            $file->move($path, $filename);
+            // Optionally, delete the existing image file from storage
+            if (File::exists(public_path($medicine->med_image))) {
+                File::delete(public_path($medicine->med_image));
+            }
+        }
 
         $medicine->update([
             'med_name' => $request->med_name,
@@ -134,6 +148,7 @@ class MedicineController extends Controller
             'med_generic_name' => $request->med_generic_name,
             'med_quantity' => $request->med_quantity,
             'med_price' => $request->med_price,
+            'med_batch_no' => $request->med_batch_no,
             'med_dosage' => $request->med_dosage,
             'med_strength' => $request->med_strength,
             'med_route' => $request->med_route,
@@ -142,10 +157,9 @@ class MedicineController extends Controller
             'med_expiry_date' => $request->med_expiry_date,
             'med_category' => $request->med_category,
             'med_manufacturer' => $request->med_manufacturer,
-            'med_status' => $request->med_status == true ? 1 : 0,
-            'med_image' => $destinationPath . '/' . $name,
+            'med_status' => $request->has('med_status') ? 1 : 0,
+            'med_image' => $path . $filename,
         ]);
-
         return redirect('/medicines')->with('status', 'Medicine updated successfully.');
     }
 
@@ -154,6 +168,10 @@ class MedicineController extends Controller
      */
     public function destroy(Medicine $medicine)
     {
+        // Optionally, delete the image file from storage
+        if (File::exists(public_path($medicine->med_image))) {
+            File::delete(public_path($medicine->med_image));
+        }
         $medicine->delete();
         return redirect('/medicines')->with('status', 'Medicine deleted successfully.');
     }

@@ -10,7 +10,7 @@
 
 <body class="h-full">
     <div class="container p-24 mx-auto">
-        <h1 class="text-2xl font-bold text-center mb-4">Create Ward</h1>
+        <h1 class="text-2xl font-bold text-center mb-4">Create Medicines</h1>
         <hr>
         <br />
         <a href="/medicines/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back</a>
@@ -52,6 +52,13 @@
                 <div class="mt-2">
                     <input id="med_price" name="med_price" type="number" placeholder="Leave Empty, if its free" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     @error('med_price') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <div>
+                <label for="med_batch_no" class="block text-sm font-medium leading-6 text-gray-900">Batch No.</label>
+                <div class="mt-2">
+                    <input id="med_batch_no" name="med_batch_no" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    @error('med_batch_no') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
@@ -131,11 +138,11 @@
             </div>
             <div>
                 <div class="flex items-center justify-between">
-                    <label for="ward_status" class="block text-sm font-medium leading-6 text-gray-900">Status</label>
+                    <label for="med_status" class="block text-sm font-medium leading-6 text-gray-900">Status</label>
                 </div>
                 <div class="mt-2">
-                    <input id="ward_status" name="ward_status" type="checkbox" class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    @error('ward_status') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="med_status" name="med_status" type="checkbox" class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="1" {{ old('med_status', $medicine->med_status ?? 'false') == '1' ? 'checked' : '' }}>
+                    @error('med_status') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
                 <br />
 
@@ -154,8 +161,11 @@
             </div>
         </form>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
+<!-- defult value today, and if also editable via click. also some other useful function -->
+    <script>
+        // code here..
+    </script>
 </body>
 
 </html>
