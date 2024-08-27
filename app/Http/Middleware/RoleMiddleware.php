@@ -17,7 +17,7 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, $roles): Response
     {
         if (!auth::check() || auth::user()->role !== $roles) {
-            return response('Unauthorized.', 401);
+            abort(401, 'You have not Permission to access this Page');
         }
         return $next($request);
     }

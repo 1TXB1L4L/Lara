@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WardController;
 use App\Http\Controllers\MedicineController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ExpenceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,7 +31,17 @@ Route::middleware([
 // Route::get('wards/{wId}', [WardController::class, 'show'])->name('wards.show');
 //
 // should login as admin to access the following routes redirectwith message
-Route::middleware('role:admin' or 'role:user')->group(function () {
+Route::middleware('role:admin')->group(function () {
     Route::resource('wards', WardController::class);
     Route::resource('medicines', MedicineController::class);
+    Route::resource('expences', ExpenceController::class);
 });
+
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:326478168.
+Route::middleware('role:user')->group(function () {
+    Route::get('/profile', function () {
+        return view('profile');
+    })->name('profile');
+});
+
+
