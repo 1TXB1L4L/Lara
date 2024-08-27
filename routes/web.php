@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WardController;
+use App\Http\Controllers\MedicineController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +28,9 @@ Route::middleware([
 // Route::put('wards/{wId}', [WardController::class, 'update'])->name('wards.update');
 // Route::delete('wards/{wId}', [WardController::class, 'destroy'])->name('wards.destroy');
 // Route::get('wards/{wId}', [WardController::class, 'show'])->name('wards.show');
-
-Route::resource('wards', App\Http\Controllers\WardController::class);
-Route::resource('medicines', App\Http\Controllers\MedicineController::class);
+//
+// should login as admin to access the following routes redirectwith message
+Route::middleware('role:admin' or 'role:user')->group(function () {
+    Route::resource('wards', WardController::class);
+    Route::resource('medicines', MedicineController::class);
+});
