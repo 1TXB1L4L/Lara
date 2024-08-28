@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Wards</title>
+    <title>Generic List</title>
 </head>
 
 <body>
@@ -19,8 +19,8 @@
                 <p>{{ session('status') }}</p>
             </div>
             @endif
-                <h1 class="text-2xl font-bold text-center mb-4">Wards</h1>
-                <a href="{{ route('wards.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New Ward</a>
+                <h1 class="text-2xl font-bold text-center mb-4">Generic List</h1>
+                <a href="{{ route('generics.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New Generic</a>
                 <br />
                 <br />
                 <br />
@@ -28,25 +28,27 @@
                     <thead>
                         <tr class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-3 px-6 text-left">Sr No.</th>
-                            <th class="py-3 px-6 text-left">Ward Name</th>
-                            <th class="py-3 px-6 text-left">Ward Description</th>
-                            <th class="py-3 px-6 text-left">Capacity</th>
+                            <th class="py-3 px-6 text-left">Generic Name</th>
+                            <th class="py-3 px-6 text-left">Generic Description</th>
+                            <th class="py-3 px-6 text-left">Catagory</th>
+                            <th class="py-3 px-6 text-left">Therapeutic Class</th>
                             <th class="py-3 px-6 text-left">Status</th>
                             <th class="py-3 px-6 text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm font-light">
-                    @foreach($wards as $ward)
+                    @foreach($generics as $generic)
                         <tr class="border-b">
                             <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
-                            <td class="py-3 px-6 text-left">{{ $ward->ward_name }}</td>
-                            <td class="py-3 px-6 text-left">{{ $ward->ward_description }}</td>
-                            <td class="py-3 px-6 text-left">{{ $ward->ward_capacity }}</td>
-                            <td class="py-3 px-6 text-left">{{ $ward->ward_status ? 'Active' : 'Inactive' }}</td>
+                            <td class="py-3 px-6 text-left">{{ $generic->generic_name }}</td>
+                            <td class="py-3 px-6 text-left">{{ $generic->generic_description }}</td>
+                            <td class="py-3 px-6 text-left">{{ $generic->generic_category }}</td>
+                            <td class="py-3 px-6 text-left">{{ $generic->therapeutic_class }}</td>
+                            <td class="py-3 px-6 text-left">{{ $generic->generic_category ? 'Active' : 'Inactive' }}</td>
                             <td class="py-3 px-6 text-center">
-                                <a href="{{ route('wards.edit', $ward->id) }}" class="text-blue-500 hover:underline">Edit</a> |
-                                <a href="{{ route('wards.show', $ward->id) }}" class="text-yellow-500 hover:underline font-bold">Show</a> |
-                                <form action="{{ route('wards.destroy', $ward->id) }}" method="POST" class="inline">
+                                <a href="{{ route('generics.edit', $generic->id) }}" class="text-blue-500 hover:underline">Edit</a> |
+                                <a href="{{ route('generics.show', $generic->id) }}" class="text-yellow-500 hover:underline font-bold">Show</a> |
+                                <form action="{{ route('generics.destroy', $generic->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-500 hover:underline">Delete</button>

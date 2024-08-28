@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('generic_description')->nullable();
             $table->boolean('generic_status')->default(1);
             $table->string('generic_notes')->nullable();
-            $table->string('generic_manufacturer')->nullable();
             $table->string('generic_category')->nullable();
             $table->string('generic_subcategory')->nullable();
             $table->string('therapeutic_class')->nullable();

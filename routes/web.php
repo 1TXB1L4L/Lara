@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\drugDeptController\WardController;
 use App\Http\Controllers\drugDeptController\MedicineController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\drugDeptController\ExpenceController;
+use App\Http\Controllers\drugDeptController\ExpenseController;
 use App\Http\Controllers\drugDeptController\GenericController;
 
 Route::get('/', function () {
@@ -35,7 +35,7 @@ Route::middleware([
 Route::middleware('role:admin')->group(function () {
     Route::resource('wards', WardController::class);
     Route::resource('medicines', MedicineController::class);
-    Route::resource('expences', ExpenceController::class);
+    Route::resource('expences', ExpenseController::class);
     Route::resource('generics', GenericController::class);
 });
 

@@ -13,7 +13,8 @@ class GenericController extends Controller
      */
     public function index()
     {
-        //
+        $generics = Generic::all();
+        return view('drugDept.generic.index')->with('generics', $generics);
     }
 
     /**
@@ -21,7 +22,7 @@ class GenericController extends Controller
      */
     public function create()
     {
-        //
+        return view('drugDept.generic.create');
     }
 
     /**
