@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\drugDeptController;
 
 use App\Models\Ward;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class WardController extends Controller
 {
@@ -12,8 +13,8 @@ class WardController extends Controller
      */
     public function index()
     {
-        $wards = Ward::paginate(10);
-        return view('ward.index', [
+        $wards = Ward::paginate(20);
+        return view('drugDept.ward.index', [
             'wards' => $wards,
         ]);
     }
@@ -23,7 +24,7 @@ class WardController extends Controller
      */
     public function create()
     {
-        return view('ward.create');
+        return view('drugDept.ward.create');
     }
 
     /**
@@ -53,7 +54,7 @@ class WardController extends Controller
      */
     public function show(Ward $ward)
     {
-        return view('ward.show', compact('ward'));
+        return view('drugDept.ward.show', compact('ward'));
     }
 
     /**
@@ -61,7 +62,7 @@ class WardController extends Controller
      */
     public function edit(Ward $ward)
     {
-        return view('ward.edit', compact('ward'));
+        return view('drugDept.ward.edit', compact('ward'));
     }
 
     /**

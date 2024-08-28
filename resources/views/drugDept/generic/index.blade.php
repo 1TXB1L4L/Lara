@@ -15,7 +15,7 @@
                                        <!-- session message -->
                                        @if(session('status'))
             <!-- message will disappear after 3 seconds after page load -->
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert" id="alert-message">
                 <p>{{ session('status') }}</p>
             </div>
             @endif
@@ -58,6 +58,23 @@
                 </table>
             </div>
         </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Find the alert message element
+        var alertMessage = document.getElementById('alert-message');
+
+        // Check if the alert message element exists
+        if (alertMessage) {
+            // Set a timeout to hide the alert message after 5 seconds (5000 milliseconds)
+            setTimeout(function() {
+                alertMessage.style.opacity = 0;
+                alertMessage.style.transition = 'opacity 0.4s'; // Optional: fade out effect
+            }, 4000);
+        }
+    });
+</script>
 </body>
 
 </html>

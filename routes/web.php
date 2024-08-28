@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WardController;
-use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\drugDeptController\WardController;
+use App\Http\Controllers\drugDeptController\MedicineController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\ExpenceController;
+use App\Http\Controllers\drugDeptController\ExpenceController;
+use App\Http\Controllers\drugDeptController\GenericController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,13 +36,11 @@ Route::middleware('role:admin')->group(function () {
     Route::resource('wards', WardController::class);
     Route::resource('medicines', MedicineController::class);
     Route::resource('expences', ExpenceController::class);
+    Route::resource('generics', GenericController::class);
 });
 
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:326478168.
 Route::middleware('role:user')->group(function () {
     Route::get('/profile', function () {
         return view('profile');
     })->name('profile');
 });
-
-

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('med_name');
             $table->string('med_description')->nullable();
-            $table->string('med_generic_name')->required();
+            $table->foreignId('generic_id')->constrained('generics', 'id')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('med_quantity')->nullable();
             $table->integer('med_price')->nullable()->default(0);
             $table->string('med_batch_no')->nullable();

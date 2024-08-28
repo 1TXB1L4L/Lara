@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\drugDeptController;
 
+use App\Http\Controllers\Controller;
 use App\Models\Medicine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use App\Models\Generic;
 
 class MedicineController extends Controller
 {
@@ -15,7 +17,7 @@ class MedicineController extends Controller
     public function index()
     {
         $medicines = Medicine::all();
-        return view('medicine.index', [
+        return view('drugDept.medicine.index', [
             'medicines' => $medicines,
         ]);
     }
@@ -25,7 +27,8 @@ class MedicineController extends Controller
      */
     public function create()
     {
-        return view('medicine.create');
+        $generics = Generic::all()->pluck('generic_name', 'id');
+        return view('drugDept.medicine.create', compact('generics'));
     }
 
     /**
@@ -36,7 +39,7 @@ class MedicineController extends Controller
         $request->validate([
             'med_name' => 'required|string|max:255',
             'med_description' => 'nullable',
-            'med_generic_name' => 'required|string|max:255',
+            'generic_id' => 'required|integer',
             'med_quantity' => 'nullable|integer',
             'med_price' => 'nullable|integer',
             'med_batch_no' => 'nullable|string|max:255',
@@ -66,7 +69,7 @@ class MedicineController extends Controller
         Medicine::create([
             'med_name' => $request->med_name,
             'med_description' => $request->med_description,
-            'med_generic_name' => $request->med_generic_name,
+            'generic_id' => $request->generic_id,
             'med_quantity' => $request->med_quantity,
             'med_price' => $request->med_price,
             'med_batch_no' => $request->med_batch_no,
@@ -90,7 +93,7 @@ class MedicineController extends Controller
      */
     public function show(Medicine $medicine)
     {
-        return view('medicine.show', compact('medicine'));
+        return view('drugDept.medicine.show', compact('medicine'));
     }
 
     /**
@@ -98,7 +101,8 @@ class MedicineController extends Controller
      */
     public function edit(Medicine $medicine)
     {
-        return view('medicine.edit', compact('medicine'));
+        $generics = Generic::all()->pluck('generic_name', 'id')->orderBy('generic_name');
+        return view('drugDept.medicine.edit', compact('medicine', 'generics'));
     }
 
     /**
@@ -109,7 +113,7 @@ class MedicineController extends Controller
         $request->validate([
             'med_name' => 'required|string|max:255',
             'med_description' => 'nullable',
-            'med_generic_name' => 'required|string|max:255',
+            'generic_id' => 'required|integer',
             'med_quantity' => 'nullable|integer',
             'med_price' => 'nullable|integer',
             'med_batch_no' => 'nullable|string|max:255',
@@ -145,7 +149,7 @@ class MedicineController extends Controller
         $medicine->update([
             'med_name' => $request->med_name,
             'med_description' => $request->med_description,
-            'med_generic_name' => $request->med_generic_name,
+            'generic_id' => $request->generic_id,
             'med_quantity' => $request->med_quantity,
             'med_price' => $request->med_price,
             'med_batch_no' => $request->med_batch_no,
