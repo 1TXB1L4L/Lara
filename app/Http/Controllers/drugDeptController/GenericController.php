@@ -30,15 +30,35 @@ class GenericController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'generic_name' => 'required',
+            'generic_description' => 'nullable',
+            'therapeutic_class' => 'nullable',
+            'generic_category' => 'nullable',
+            'generic_subcategory' => 'nullable',
+            'generic_notes' => 'nullable',
+            'generic_status' => 'nullable',
+        ]);
+
+        Generic::create([
+            'generic_name' => $request->generic_name,
+            'generic_description' => $request->generic_description,
+            'therapeutic_class' => $request->generic_therapeutic_class,
+            'generic_category' => $request->generic_category,
+            'generic_subcategory' => $request->generic_subcategory,
+            'generic_notes' => $request->generic_note,
+            'generic_status' => $request->generic_status == true ? 1 : 0,
+        ]);
+
+        return redirect('/generics')->with('status', 'Generic created successfully.');
     }
 
-    /**
+    /**_
      * Display the specified resource.
      */
     public function show(Generic $generic)
     {
-        //
+        return view('drugDept.generic.show', compact('generic'));
     }
 
     /**
@@ -46,7 +66,7 @@ class GenericController extends Controller
      */
     public function edit(Generic $generic)
     {
-        //
+        return view('drugDept.generic.edit', compact('generic'));
     }
 
     /**
@@ -54,7 +74,27 @@ class GenericController extends Controller
      */
     public function update(Request $request, Generic $generic)
     {
-        //
+        $request->validate([
+            'generic_name' => 'required',
+            'generic_description' => 'nullable',
+            'therapeutic_class' => 'nullable',
+            'generic_category' => 'nullable',
+            'generic_subcategory' => 'nullable',
+            'generic_notes' => 'nullable',
+            'generic_status' => 'nullable',
+        ]);
+        //therapeutic_class
+        $generic->update([
+            'generic_name' => $request->generic_name,
+            'generic_description' => $request->generic_description,
+            'therapeutic_class' => $request->generic_therapeutic_class,
+            'generic_category' => $request->generic_category,
+            'generic_subcategory' => $request->generic_subcategory,
+            'generic_notes' => $request->generic_note,
+            'generic_status' => $request->generic_status == true ? 1 : 0,
+        ]);
+
+        return redirect('/generics')->with('status', 'Generic updated successfully.');
     }
 
     /**
@@ -62,6 +102,7 @@ class GenericController extends Controller
      */
     public function destroy(Generic $generic)
     {
-        //
+        $generic->delete();
+        return redirect('/generics')->with('status', 'Generic deleted successfully.');
     }
 }

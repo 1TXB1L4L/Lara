@@ -41,7 +41,9 @@
                         <tr class="border-b">
                             <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
                             <td class="py-3 px-6 text-left">{{ $generic->generic_name }}</td>
-                            <td class="py-3 px-6 text-left">{{ $generic->generic_description }}</td>
+                            <!-- limit the description to 50 characters -->
+                            <!-- make sure the description is not empty -->
+                            <td class="py-3 px-6 text-left">{{ $generic->generic_description ? substr($generic->generic_description, 0, 50) . '...' : '' }}</td>
                             <td class="py-3 px-6 text-left">{{ $generic->generic_category }}</td>
                             <td class="py-3 px-6 text-left">{{ $generic->therapeutic_class }}</td>
                             <td class="py-3 px-6 text-left">{{ $generic->generic_category ? 'Active' : 'Inactive' }}</td>
