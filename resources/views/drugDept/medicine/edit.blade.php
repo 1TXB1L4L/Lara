@@ -21,17 +21,17 @@
             @csrf
             @method('PUT')
             <div>
-                <label for="med_name" class="block text-sm font-medium leading-6 text-gray-900">Medicine Name</label>
+                <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Medicine Name</label>
                 <div class="mt-2">
-                    <input id="med_name" name="med_name" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->med_name }}">
-                    @error('med_name') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="name" name="name" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->name }}">
+                    @error('name') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
-                <label for="med_description" class="block text-sm font-medium leading-6 text-gray-900">Description</label>
+                <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Description</label>
                 <div class="mt-2">
-                    <input id="med_description" name="med_description" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->med_description }}">
-                    @error('med_description') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="description" name="description" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->description }}">
+                    @error('description') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
@@ -47,45 +47,45 @@
                 </div>
             </div>
             <div>
-                <label for="med_quantity" class="block text-sm font-medium leading-6 text-gray-900">Quantity</label>
+                <label for="quantity" class="block text-sm font-medium leading-6 text-gray-900">Quantity</label>
                 <div class="mt-2">
-                    <input id="med_quantity" name="med_quantity" type="number" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->med_quantity }}">
-                    @error('med_quantity') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="quantity" name="quantity" type="number" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->quantity }}">
+                    @error('quantity') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
-                <label for="med_price" class="block text-sm font-medium leading-6 text-gray-900">Price</label>
+                <label for="price" class="block text-sm font-medium leading-6 text-gray-900">Price</label>
                 <div class="mt-2">
-                    <input id="med_price" name="med_price" type="number" placeholder="Leave Empty, if its free" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->med_price }}">
-                    @error('med_price') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="price" name="price" type="number" placeholder="Leave Empty, if its free" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->price }}">
+                    @error('price') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
-                <label for="med_batch_no" class="block text-sm font-medium leading-6 text-gray-900">Batch No.</label>
+                <label for="batch_no" class="block text-sm font-medium leading-6 text-gray-900">Batch No.</label>
                 <div class="mt-2">
-                    <input id="med_batch_no" name="med_batch_no" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    @error('med_batch_no') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="batch_no" name="batch_no" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    @error('batch_no') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
-                <label for="med_dosage" class="block text-sm font-medium leading-6 text-gray-900">Dosage</label>
+                <label for="dosage" class="block text-sm font-medium leading-6 text-gray-900">Dosage</label>
                 <div class="mt-2">
-                    <input id="med_dosage" name="med_dosage" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->med_dosage }}">
-                    @error('med_dosage') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="dosage" name="dosage" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->dosage }}">
+                    @error('dosage') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
-                <label for="med_strength" class="block text-sm font-medium leading-6 text-gray-900">Strength</label>
+                <label for="strength" class="block text-sm font-medium leading-6 text-gray-900">Strength</label>
                 <div class="mt-2">
-                    <input id="med_strength" name="med_strength" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->med_strength }}">
-                    @error('med_med_strength') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="strength" name="strength" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->strength }}">
+                    @error('strength') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
-                <label for="med_route" class="block text-sm font-medium leading-6 text-gray-900">Route</label>
+                <label for="route" class="block text-sm font-medium leading-6 text-gray-900">Route</label>
                 <div class="mt-2">
-                <select id="med_route" name="med_route" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                <option value="{{ $medicine->med_route }}" selected>{{ $medicine->med_route }}</option>
+                <select id="route" name="route" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <option value="{{ $medicine->route }}" selected>{{ $medicine->route }}</option>
                 <option value="Oral">Oral</option>
                 <option value="Intravenous">Intravenous</option>
                 <option value="Intramuscular">Intramuscular</option>
@@ -104,60 +104,60 @@
                 <option value="Opthalmic">Opthalmic</option>
                 <option value="Other">Other</option>
                 </select>
-                    @error('med_route') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    @error('route') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
-                <label for="med_therapeutic_class" class="block text-sm font-medium leading-6 text-gray-900">Therapeutic Class</label>
+                <label for="therapeutic_class" class="block text-sm font-medium leading-6 text-gray-900">Therapeutic Class</label>
                 <div class="mt-2">
-                    <input id="med_therapeutic_class" name="med_therapeutic_class" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->med_therapeutic_class }}">
-                    @error('med_therapeutic_class') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="therapeutic_class" name="therapeutic_class" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->therapeutic_class }}">
+                    @error('therapeutic_class') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
-                <label for="med_notes" class="block text-sm font-medium leading-6 text-gray-900">Any Note</label>
+                <label for="notes" class="block text-sm font-medium leading-6 text-gray-900">Any Note</label>
                 <div class="mt-2">
-                    <input id="med_notes" name="med_notes" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->med_notes }}">
-                    @error('med_notes') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="notes" name="notes" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->notes }}">
+                    @error('notes') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
-    <label for="med_expiry_date" class="block text-sm font-medium leading-6 text-gray-900">Expiry Date</label>
+    <label for="expiry_date" class="block text-sm font-medium leading-6 text-gray-900">Expiry Date</label>
     <div class="mt-2">
-        <input id="med_expiry_date" name="med_expiry_date" type="date" required class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('med_expiry_date', \Carbon\Carbon::parse($medicine->med_expiry_date)->format('Y-m-d')) }}">
-        @error('med_expiry_date') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+        <input id="expiry_date" name="expiry_date" type="date" required class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('expiry_date', \Carbon\Carbon::parse($medicine->expiry_date)->format('Y-m-d')) }}">
+        @error('expiry_date') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
     </div>
 </div>
             <div>
-                <label for="med_category" class="block text-sm font-medium leading-6 text-gray-900">Category</label>
+                <label for="category" class="block text-sm font-medium leading-6 text-gray-900">Category</label>
                 <div class="mt-2">
-                    <input id="med_category" name="med_category" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->med_category }}">
-                    @error('med_category') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="category" name="category" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->category }}">
+                    @error('category') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
-                <label for="med_manufacturer" class="block text-sm font-medium leading-6 text-gray-900">Manufacturer</label>
+                <label for="manufacturer" class="block text-sm font-medium leading-6 text-gray-900">Manufacturer</label>
                 <div class="mt-2">
-                    <input id="med_manufacturer" name="med_manufacturer" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->med_manufacturer }}">
-                    @error('med_manufacturer') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="manufacturer" name="manufacturer" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->manufacturer }}">
+                    @error('manufacturer') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div>
                 <div class="flex items-center justify-between">
-                    <label for="med_status" class="block text-sm font-medium leading-6 text-gray-900">Status</label>
+                    <label for="status" class="block text-sm font-medium leading-6 text-gray-900">Status</label>
                 </div>
                 <div class="mt-2">
-                    <input id="med_status" name="med_status" type="checkbox" class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="1" {{ old('med_status', $medicine->med_status ?? false) ? 'checked' : '' }}>
-                    @error('med_status') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input id="status" name="status" type="checkbox" class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="1" {{ old('status', $medicine->status ?? false) ? 'checked' : '' }}>
+                    @error('status') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
                 <br />
 
                 <div>
-                    <label for="med_image" class="block text-sm font-medium leading-6 text-gray-900">Upload Image</label>
+                    <label for="image" class="block text-sm font-medium leading-6 text-gray-900">Upload Image</label>
                     </div>
                 <div class="mt-2">
-                    <input type="file" name="med_image" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    @error('med_image') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    <input type="file" name="image" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    @error('image') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                     <p class="text-xs text-gray-500">Image should be less than 2MB</p>
                 </div>
             </div>

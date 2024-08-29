@@ -37,7 +37,7 @@ class GenericSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'generic_name' => 'Metoclopramide',
+                'generic_name' => 'Metoclopramide HCl',
                 'generic_description' => 'Metoclopramide is a medication used for stomach and esophageal problems.[5] It is commonly used to treat and prevent nausea and vomiting, to help with emptying of the stomach in people with delayed stomach emptying, and to help with gastroesophageal reflux disease.',
                 'generic_status' => 1,
                 'generic_notes' => null,
@@ -70,7 +70,7 @@ class GenericSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'generic_name' => 'Corticosteroids',
+                'generic_name' => 'Ceftriaxone',
                 'generic_description' => 'Ceftriaxone, sold under the brand name Rocephin, is a third-generation cephalosporin antibiotic used for the treatment of a number of bacterial infections.',
                 'generic_status' => 1,
                 'generic_notes' => null,

@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             WardSeeder::class,
             GenericSeeder::class,
+            MedicineSeeder::class,
         ]);
     }
 }

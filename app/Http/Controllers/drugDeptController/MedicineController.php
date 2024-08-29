@@ -16,7 +16,7 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        $medicines = Medicine::all();
+        $medicines = Medicine::with('generic')->get();
         return view('drugDept.medicine.index', [
             'medicines' => $medicines,
         ]);

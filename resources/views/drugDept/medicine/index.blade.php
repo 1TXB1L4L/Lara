@@ -41,18 +41,20 @@
                     @foreach($medicines as $medicine)
                         <tr class="border-b">
                             <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
-                            <td class="py-3 px-6 text-left">{{ $medicine->med_name }}</td>
-                            @if($medicine->med_status == 0)
+                            <td class="py-3 px-6 text-left">{{ $medicine->name }}</td>
+                            @if($medicine->status == 0)
                             <td class="py-3 px-6 text-left">Inactive</td>
                             @else
                             <td class="py-3 px-6 text-left">Active</td>
                             @endif
-                            <td class="py-3 px-6 text-center">{{ $medicine->med_generic_name }}</td>
-                            <td class="py-3 px-6 text-center">{{ $medicine->med_quantity }}</td>
+                            <!-- generic name -->
+                            <td class="py-3 px-6 text-center">{{ $medicine->generic->generic_name }}</td>
+                            <!-- quantity -->
+                            <td class="py-3 px-6 text-center">{{ $medicine->quantity }}</td>
                             <!-- rounded image -->
-                            @if($medicine->med_image != null)
+                            @if($medicine->image != null)
                             <td class="py-3 px-6 text-center">
-                                <img src="{{ asset($medicine->med_image) }}" class="rounded-full h-12 w-12" />
+                                <img src="{{ asset($medicine->image) }}" class="rounded-full h-12 w-12" />
                             </td>
                             @else
                             <td class="py-3 px-6 text-center">

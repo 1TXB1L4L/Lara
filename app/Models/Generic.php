@@ -20,4 +20,10 @@ class Generic extends Model
         'generic_note',
         'generic_status',
     ];
+
+    public function medicines()
+    {
+        return $this->hasMany(Medicine::class);
+    }
+
 }
