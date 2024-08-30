@@ -33,20 +33,20 @@ class GenericController extends Controller
         $request->validate([
             'generic_name' => 'required',
             'generic_description' => 'nullable',
-            'therapeutic_class' => 'nullable',
-            'generic_category' => 'nullable',
+            'therapeutic_class' => 'required|string|max:255',
+            'generic_category' => 'nullable|string|max:255',
             'generic_subcategory' => 'nullable',
-            'generic_notes' => 'nullable',
+            'generic_notes' => 'nullable|string',
             'generic_status' => 'nullable',
         ]);
 
         Generic::create([
             'generic_name' => $request->generic_name,
             'generic_description' => $request->generic_description,
-            'therapeutic_class' => $request->generic_therapeutic_class,
+            'therapeutic_class' => $request->therapeutic_class,
             'generic_category' => $request->generic_category,
             'generic_subcategory' => $request->generic_subcategory,
-            'generic_notes' => $request->generic_note,
+            'generic_notes' => $request->generic_notes,
             'generic_status' => $request->generic_status == true ? 1 : 0,
         ]);
 
@@ -77,20 +77,19 @@ class GenericController extends Controller
         $request->validate([
             'generic_name' => 'required',
             'generic_description' => 'nullable',
-            'therapeutic_class' => 'nullable',
-            'generic_category' => 'nullable',
+            'therapeutic_class' => 'required|string|max:255',
+            'generic_category' => 'nullable|string|max:255',
             'generic_subcategory' => 'nullable',
-            'generic_notes' => 'nullable',
+            'generic_notes' => 'nullable|string',
             'generic_status' => 'nullable',
         ]);
-        //therapeutic_class
         $generic->update([
             'generic_name' => $request->generic_name,
             'generic_description' => $request->generic_description,
-            'therapeutic_class' => $request->generic_therapeutic_class,
+            'therapeutic_class' => $request->therapeutic_class,
             'generic_category' => $request->generic_category,
             'generic_subcategory' => $request->generic_subcategory,
-            'generic_notes' => $request->generic_note,
+            'generic_notes' => $request->generic_notes,
             'generic_status' => $request->generic_status == true ? 1 : 0,
         ]);
 

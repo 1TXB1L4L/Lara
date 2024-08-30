@@ -46,7 +46,7 @@
                             <td class="py-3 px-6 text-left">{{ $generic->generic_description ? substr($generic->generic_description, 0, 50) . '...' : '' }}</td>
                             <td class="py-3 px-6 text-left">{{ $generic->generic_category }}</td>
                             <td class="py-3 px-6 text-left">{{ $generic->therapeutic_class }}</td>
-                            <td class="py-3 px-6 text-left">{{ $generic->generic_category ? 'Active' : 'Inactive' }}</td>
+                            <td class="py-3 px-6 text-left">{{ $generic->generic_status ? 'Active' : 'Inactive' }}</td>
                             <td class="py-3 px-6 text-center">
                                 <a href="{{ route('generics.edit', $generic->id) }}" class="text-blue-500 hover:underline">Edit</a> |
                                 <a href="{{ route('generics.show', $generic->id) }}" class="text-yellow-500 hover:underline font-bold">Show</a> |

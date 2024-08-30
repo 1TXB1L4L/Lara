@@ -29,7 +29,7 @@ class GenericSeeder extends Seeder
                 'generic_name' => 'Dexamethasone',
                 'generic_description' => 'Dexamethasone is a corticosteroid that prevents the release of substances in the body that cause inflammation',
                 'generic_status' => 1,
-                'generic_notes' => null,
+                'generic_notes' => "Steroid",
                 'generic_category' => 'Corticosteroid',
                 'generic_subcategory' => null,
                 'therapeutic_class' => 'Corticosteroid',
@@ -38,7 +38,7 @@ class GenericSeeder extends Seeder
             ],
             [
                 'generic_name' => 'Metoclopramide HCl',
-                'generic_description' => 'Metoclopramide is a medication used for stomach and esophageal problems.[5] It is commonly used to treat and prevent nausea and vomiting, to help with emptying of the stomach in people with delayed stomach emptying, and to help with gastroesophageal reflux disease.',
+                'generic_description' => 'Metoclopramide is a medication used for stomach and esophageal problems. It is commonly used to treat and prevent nausea and vomiting, to help with emptying of the stomach in people with delayed stomach emptying, and to help with gastroesophageal reflux disease.',
                 'generic_status' => 1,
                 'generic_notes' => null,
                 'generic_category' => 'Dopamine-receptor antagonists',
@@ -49,7 +49,7 @@ class GenericSeeder extends Seeder
             ],
             [
                 'generic_name' => 'Tramadol',
-                'generic_description' => 'Tramadol, sold under the brand name Ultram among others,[1] is an opioid pain medication and a serotonin–norepinephrine reuptake inhibitor (SNRI) used to treat moderately severe pain.',
+                'generic_description' => 'Tramadol, sold under the brand name Ultram among others, is an opioid pain medication and a serotonin–norepinephrine reuptake inhibitor (SNRI) used to treat moderately severe pain.',
                 'generic_status' => 1,
                 'generic_notes' => null,
                 'generic_category' => 'Pain-Killer',

@@ -27,7 +27,7 @@ class MedicineController extends Controller
      */
     public function create()
     {
-        $generics = Generic::all()->pluck('generic_name', 'id');
+        $generics = Generic::all();
         return view('drugDept.medicine.create', compact('generics'));
     }
 

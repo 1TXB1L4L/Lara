@@ -14,10 +14,10 @@ class Generic extends Model
     protected $fillable = [
         'generic_name',
         'generic_description',
-        'generic_therapeutic_class',
+        'therapeutic_class',
         'generic_category',
         'generic_subcategory',
-        'generic_note',
+        'generic_notes',
         'generic_status',
     ];
 
