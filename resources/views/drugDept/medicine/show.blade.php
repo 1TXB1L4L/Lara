@@ -30,7 +30,7 @@
                     </tr>
                     <tr>
                         <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Generic Name</td>
-                        <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100">{{ $medicine->generic_name }}</td>
+                        <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100">{{ $medicine->generic->generic_name }}</td>
                     </tr>
                     <tr>
                         <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Quantity</td>
@@ -51,10 +51,6 @@
                     <tr>
                         <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Expiry Date</td>
                         <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100"> {{ \Carbon\Carbon::parse($medicine->expiry_date)->format('d/m/Y') }} </td>
-                    </tr>
-                    <tr>
-                        <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Therapeutic Class</td>
-                        <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100">{{ $medicine->therapeutic_class }}</td>
                     </tr>
                     <tr>
                         <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Notes</td>

@@ -34,18 +34,22 @@
                     @error('description') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
-            <div>
-            <label for="generic_id" class="block text-sm font-medium leading-6 text-gray-900">Generic Name</label>
-                <div class="mt-2">
-                    <select id="generic_id" name="generic_id" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        <option value="{{ $medicine->generic_id }}" selected>{{ $generic->generic_name }}</option>
-                        @foreach($generics as $generic)
-                        <option value="{{ $generic->id }}">{{ $generic->generic_name }}</option>
-                        @endforeach
-                    </select>
-                    @error('generic_id') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
-                </div>
-            </div>
+<div>
+    <label for="generic_id" class="block text-sm font-medium leading-6 text-gray-900">Generic Name</label>
+    <div class="mt-2">
+        <select id="generic_id" name="generic_id" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Select Generic Name" required>
+            <!-- <option value="{{ $medicine->generic_id }}" selected>{{ $medicine->generic->generic_name }}</option> -->
+            @foreach($generics as $generic)
+                <option value="{{ $generic->id }}" {{ old('generic_id', $medicine->generic_id) == $generic->id ? 'selected' : '' }}>
+                    {{ $generic->generic_name }}
+                </option>
+            @endforeach
+        </select>
+        @error('generic_id')
+            <span class="text-red-600 text-sm">{{ $message }}</span>
+        @enderror
+    </div>
+</div>
             <div>
                 <label for="quantity" class="block text-sm font-medium leading-6 text-gray-900">Quantity</label>
                 <div class="mt-2">
@@ -63,7 +67,7 @@
             <div>
                 <label for="batch_no" class="block text-sm font-medium leading-6 text-gray-900">Batch No.</label>
                 <div class="mt-2">
-                    <input id="batch_no" name="batch_no" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <input id="batch_no" name="batch_no" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->batch_no }}">
                     @error('batch_no') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
@@ -81,39 +85,21 @@
                     @error('strength') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
-            <div>
-                <label for="route" class="block text-sm font-medium leading-6 text-gray-900">Route</label>
-                <div class="mt-2">
-                <select id="route" name="route" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                <option value="{{ $medicine->route }}" selected>{{ $medicine->route }}</option>
-                <option value="Oral">Oral</option>
-                <option value="Intravenous">Intravenous</option>
-                <option value="Intramuscular">Intramuscular</option>
-                <option value="Subcutaneous">Subcutaneous</option>
-                <option value="Topical">Intrathecal</option>
-                <option value="Buccal">Buccal</option>
-                <option value="Intrathecal">Intrathecal</option>
-                <option value="Rectal">Rectal</option>
-                <option value="Vaginal">Vaginal</option>
-                <option value="Ocular">Ocular</option>
-                <option value="Otic">Otic</option>
-                <option value="Nasal">Nasal</option>
-                <option value="Inhalation">Inhalation</option>
-                <option value="Nebulized">Nebulized</option>
-                <option value="Transdermal">Transdermal</option>
-                <option value="Opthalmic">Opthalmic</option>
-                <option value="Other">Other</option>
-                </select>
-                    @error('route') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
-                </div>
-            </div>
-            <div>
-                <label for="therapeutic_class" class="block text-sm font-medium leading-6 text-gray-900">Therapeutic Class</label>
-                <div class="mt-2">
-                    <input id="therapeutic_class" name="therapeutic_class" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ $medicine->therapeutic_class }}">
-                    @error('therapeutic_class') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
-                </div>
-            </div>
+<div>
+    <label for="route" class="block text-sm font-medium leading-6 text-gray-900">Route</label>
+    <div class="mt-2">
+        <select id="route" name="route" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            @foreach(['Oral', 'Intravenous', 'Intramuscular', 'Subcutaneous', 'Topical', 'Buccal', 'Intrathecal', 'Rectal', 'Vaginal', 'Ocular', 'Otic', 'Nasal', 'Inhalation', 'Nebulized', 'Transdermal', 'Opthalmic', 'Other'] as $route)
+                <option value="{{ $route }}" {{ old('route', $medicine->route) == $route ? 'selected' : '' }}>
+                    {{ $route }}
+                </option>
+            @endforeach
+        </select>
+        @error('route')
+            <span class="text-red-600 text-sm">{{ $message }}</span>
+        @enderror
+    </div>
+</div>
             <div>
                 <label for="notes" class="block text-sm font-medium leading-6 text-gray-900">Any Note</label>
                 <div class="mt-2">

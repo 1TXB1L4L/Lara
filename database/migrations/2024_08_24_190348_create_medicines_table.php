@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('route')->nullable();
             $table->string('notes')->nullable();
             $table->date('expiry_date')->nullable();
+            $table->string('category')->nullable();
             $table->string('manufacturer')->nullable();
             $table->boolean('status')->default(1)->comment('1=Active, 0=Inactive');
             $table->string('image')->nullable();

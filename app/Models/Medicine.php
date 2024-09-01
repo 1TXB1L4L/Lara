@@ -13,22 +13,21 @@ class Medicine extends Model
     protected $table = 'medicines';
 
     protected $fillable = [
-        'med_name',
-        'med_description',
-        'med_generic_name',
-        'med_quantity',
-        'med_price',
-        'med_batch_no',
-        'med_dosage',
-        'med_strength',
-        'med_route',
-        'med_therapeutic_class',
-        'med_notes',
-        'med_expiry_date',
-        'med_category',
-        'med_manufacturer',
-        'med_status',
-        'med_image',
+        'name',
+        'description',
+        'generic_id',
+        'quantity',
+        'price',
+        'batch_no',
+        'dosage',
+        'strength',
+        'route',
+        'notes',
+        'expiry_date',
+        'category',
+        'manufacturer',
+        'status',
+        'image',
     ];
 
     protected $casts = [
@@ -39,5 +38,5 @@ class Medicine extends Model
     {
         return $this->belongsTo(Generic::class);
     }
-    
+
 }
