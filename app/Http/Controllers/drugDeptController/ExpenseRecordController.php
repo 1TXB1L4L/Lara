@@ -15,25 +15,20 @@ class ExpenseRecordController extends Controller
      */
     public function index()
     {
-        //
+        // Implement the index method if needed
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    // get status and id of the expense record
     public function create(Request $request)
     {
         $status = request('status');
         $expense_id = request('expense_id');
-        $medicines = Medicine::all()->where('status', '1')->where('quantity', '>', '0')->sortBy('name');
-        $generic = Generic::all();
-        return view('drugDept.expense.createRecord', [
-            'status' => $status,
-            'expense_id' => $expense_id,
-            'medicines' => $medicines,
-            'generic' => $generic
-        ]);
+        $medicines = Medicine::where('status', 1)->where('quantity', '>', 0)->orderBy('name')->get();
+        $generics = Generic::all();
+    
+        return view('drugDept.expense.createRecord', compact('status', 'expense_id', 'medicines', 'generics'));
     }
 
     /**
@@ -62,9 +57,13 @@ class ExpenseRecordController extends Controller
 
             return redirect()->route('expense.index')->with('status', 'Expense records created successfully');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'An error occurred');
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
     }
+
+    
+
+
 
     /**
      * Display the specified resource.
