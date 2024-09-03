@@ -4,6 +4,9 @@ namespace App\Http\Controllers\drugDeptController;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\ExpenseRecord;
+use App\Models\Medicine;
+use App\Models\Generic;
 
 class ExpenseRecordController extends Controller
 {
@@ -18,9 +21,19 @@ class ExpenseRecordController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    // get status and id of the expense record
+    public function create(Request $request)
     {
-        //
+        $status = request('status');
+        $expense_id = request('expense_id');
+        $medicines = Medicine::all()->where('status', '1')->where('quantity', '>', '0')->sortBy('name');
+        $generic = Generic::all();
+        return view('drugDept.expense.createRecord', [
+            'status' => $status,
+            'expense_id' => $expense_id,
+            'medicines' => $medicines,
+            'generic' => $generic
+        ]);
     }
 
     /**
@@ -28,7 +41,29 @@ class ExpenseRecordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'expense_id' => 'required|exists:expenses,id',
+            'medicine_id.*' => 'required|exists:medicines,id',
+            'medicine_name.*' => 'required|string',
+            'generic_name.*' => 'required|string',
+            'quantity.*' => 'required|integer|min:1',
+        ]);
+
+        try {
+            foreach ($request->medicine_id as $index => $medicine_id) {
+                ExpenseRecord::create([
+                    'expense_id' => $request->expense_id,
+                    'medicine_id' => $medicine_id,
+                    'medicine_name' => $request->medicine_name[$index],
+                    'generic_name' => $request->generic_name[$index],
+                    'quantity' => $request->quantity[$index],
+                ]);
+            }
+
+            return redirect()->route('expense.index')->with('status', 'Expense records created successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred');
+        }
     }
 
     /**

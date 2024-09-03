@@ -6,7 +6,7 @@ use App\Http\Controllers\drugDeptController\MedicineController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\drugDeptController\ExpenseController;
 use App\Http\Controllers\drugDeptController\GenericController;
-use App\Http\Controllers\drugDeptController\expenseRecordController;
+use App\Http\Controllers\drugDeptController\ExpenseRecordController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,6 +39,7 @@ Route::middleware('role:admin')->group(function () {
     Route::resource('generics', GenericController::class);
     Route::resource('expenseRecord', expenseRecordController::class);
     Route::resource('expense', ExpenseController::class);
+    Route::get('expenseRecord/create/{expense_id}', [ExpenseRecordController::class, 'create'])->name('expenseRecord.create');
 });
 
 Route::middleware('role:user')->group(function () {

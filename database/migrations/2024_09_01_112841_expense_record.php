@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('expense_id')->constrained();
             $table->foreignId('medicines_id')->constrained();
+            $table->string('medicine_name');
+            $table->string('generic_name');
             $table->integer('quantity');
             $table->timestamps();
         });

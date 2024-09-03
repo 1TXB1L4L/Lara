@@ -17,4 +17,14 @@ class Ward extends Model
         'ward_capacity',
         'ward_status',
     ];
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

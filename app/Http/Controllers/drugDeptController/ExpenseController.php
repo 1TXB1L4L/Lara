@@ -4,6 +4,11 @@ namespace App\Http\Controllers\drugDeptController;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Expense;
+use App\Models\Ward;
+use App\Models\Medicine;
+use App\Models\Generic;
+use App\Models\ExpenseRecord;
 
 class ExpenseController extends Controller
 {
@@ -12,7 +17,9 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        //
+        $records = Expense::all();
+        $expenseRecords = ExpenseRecord::all();
+        return view('drugDept.expense.index', compact('records', 'expenseRecords'));
     }
 
     /**
@@ -20,7 +27,10 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        //
+        $wards = Ward::where('ward_status', 1)->get();
+        $medicines = Medicine::where('status', 1)->where('quantity', '>', 0)->orderBy('name')->get();
+        $generics = Generic::where('status', 1)->get();
+        return view('drugDept.expense.create', compact('wards', 'medicines', 'generics'));
     }
 
     /**
@@ -28,7 +38,25 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'date' => 'required',
+            'ward_id' => 'required|exists:wards,id',
+            'note' => 'nullable|string',
+        ]);
+
+        try {
+            $expense = Expense::create([
+                'date' => $request->date,
+                'ward_id' => $request->ward_id,
+                'note' => $request->note,
+                'user_id' => auth()->user()->id,
+            ]);
+
+            return redirect()->route('expenseRecord.create', ['expense_id' => $expense->id])
+                ->with('status', 'Expense created successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -36,7 +64,10 @@ class ExpenseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $expense = Expense::findOrFail($id);
+        $expenseRecords = $expense->expenseRecords;
+
+        return view('drugDept.expense.show', compact('expense', 'expenseRecords'));
     }
 
     /**
@@ -44,7 +75,10 @@ class ExpenseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $expense = Expense::findOrFail($id);
+        $wards = Ward::where('ward_status', 1)->get();
+
+        return view('drugDept.expense.edit', compact('expense', 'wards'));
     }
 
     /**
@@ -52,7 +86,24 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'date' => 'required',
+            'ward_id' => 'required|exists:wards,id',
+            'note' => 'nullable|string',
+        ]);
+
+        try {
+            $expense = Expense::findOrFail($id);
+            $expense->update([
+                'date' => $request->date,
+                'ward_id' => $request->ward_id,
+                'note' => $request->note,
+            ]);
+
+            return redirect()->route('expense.index')->with('status', 'Expense updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -60,6 +111,13 @@ class ExpenseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $expense = Expense::findOrFail($id);
+            $expense->delete();
+
+            return redirect()->route('expense.index')->with('status', 'Expense deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 }
