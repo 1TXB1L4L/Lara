@@ -27,13 +27,14 @@ class ExpenseRecordController extends Controller
         $expense_id = request('expense_id');
         $medicines = Medicine::where('status', 1)->where('quantity', '>', 0)->orderBy('name')->get();
         $generics = Generic::all();
-    
+
         return view('drugDept.expense.createRecord', compact('status', 'expense_id', 'medicines', 'generics'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -61,16 +62,11 @@ class ExpenseRecordController extends Controller
         }
     }
 
-    
-
-
-
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
     }
 
     /**

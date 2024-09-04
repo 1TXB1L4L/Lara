@@ -43,11 +43,13 @@
                             <td class="py-3 px-6 text-left date">{{ $record->date }}</td>
                             <td class="py-3 px-6 text-left">{{ $record->ward->ward_name }}</td>
                             <!-- generic name -->
-                            <td class="py-3 px-6 text-center">{{ $record->total_items }}</td>
+                            <td class="py-3 px-6 text-center">{{ $record->getTotalRecordsAttribute() }}</td>
                             <!-- quantity -->
                             <td class="py-3 px-6 text-center">
                                 <a href="{{ route('expense.edit', $record->id) }}" class="text-blue-500 hover:underline">Edit</a> |
                                 <a href="{{ route('expenseRecord.create', $record->id) }}" class="text-yellow-500 hover:underline font-bold">Create Record</a> |
+                                <a href="{{ route('expense.show', $record->id) }}" class="text-green-500 hover:underline">View Record</a> |
+                                <a href="{{ route('expenseRecord.edit', $record->id) }}" class="text-pink-200 hover:underline">Edit Record</a> |
                                 <form action="{{ route('expense.destroy', $record->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
@@ -58,6 +60,9 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="container mx-auto p-8 m-4">
+            {{ $records->links() }}
             </div>
         </div>
 <script>

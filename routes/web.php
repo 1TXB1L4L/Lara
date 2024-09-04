@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\drugDeptController\ExpenseController;
 use App\Http\Controllers\drugDeptController\GenericController;
 use App\Http\Controllers\drugDeptController\ExpenseRecordController;
+use App\Http\Controllers\ExecuteCommandController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,3 +48,6 @@ Route::middleware('role:user')->group(function () {
         return view('profile');
     })->name('profile');
 });
+
+
+Route::get('/execute-command', [ExecuteCommandController::class, 'executeCommand']);

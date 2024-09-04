@@ -17,7 +17,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $records = Expense::all();
+        $records = Expense::paginate(11);
         $expenseRecords = ExpenseRecord::all();
         return view('drugDept.expense.index', compact('records', 'expenseRecords'));
     }
@@ -65,9 +65,10 @@ class ExpenseController extends Controller
     public function show(string $id)
     {
         $expense = Expense::findOrFail($id);
-        $expenseRecords = $expense->expenseRecords;
+        $expenseRecords = ExpenseRecord::where('expense_id', $id)->get();
+        // dd($expenseRecords);
 
-        return view('drugDept.expense.show', compact('expense', 'expenseRecords'));
+        return view('drugDept.expense.showRecord', compact('expense', 'expenseRecords'));
     }
 
     /**
@@ -77,8 +78,9 @@ class ExpenseController extends Controller
     {
         $expense = Expense::findOrFail($id);
         $wards = Ward::where('ward_status', 1)->get();
-
-        return view('drugDept.expense.edit', compact('expense', 'wards'));
+        $medicines = Medicine::where('status', 1)->where('quantity', '>', 0)->orderBy('name')->get();
+        $generics = Generic::where('status', 1)->get();
+        return view('drugDept.expense.edit', compact('expense', 'wards', 'medicines', 'generics'));
     }
 
     /**
@@ -86,24 +88,7 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'date' => 'required',
-            'ward_id' => 'required|exists:wards,id',
-            'note' => 'nullable|string',
-        ]);
-
-        try {
-            $expense = Expense::findOrFail($id);
-            $expense->update([
-                'date' => $request->date,
-                'ward_id' => $request->ward_id,
-                'note' => $request->note,
-            ]);
-
-            return redirect()->route('expense.index')->with('status', 'Expense updated successfully');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
-        }
+        //
     }
 
     /**

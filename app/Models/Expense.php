@@ -27,9 +27,14 @@ class Expense extends Model
         return $this->belongsTo(Ward::class);
     }
 
-    public function expenseRecord(): HasFactory
+    public function expenseRecords()
     {
-        return $this->hasFactory(ExpenseRecord::class);
+        return $this->hasMany(ExpenseRecord::class);
+    }
+
+    public function getTotalRecordsAttribute()
+    {
+        return $this->expenseRecords->count();
     }
 }
 

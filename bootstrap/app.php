@@ -22,6 +22,3 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })->create();
 
-// any error in the above code???
-// A. The 'use' statement is missing for the RoleMiddleware class.
-//
