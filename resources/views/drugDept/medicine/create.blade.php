@@ -58,6 +58,13 @@
                 </div>
             </div>
             <div>
+                <label for="strength" class="block text-sm font-medium leading-6 text-gray-900">Strength</label>
+                <div class="mt-2">
+                    <input id="strength" name="strength" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('strength') }}">
+                    @error('strength') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <div>
                 <label for="price" class="block text-sm font-medium leading-6 text-gray-900">Price</label>
                 <div class="mt-2">
                     <input id="price" name="price" type="number" placeholder="Leave Empty, if its free" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('price') }}">
