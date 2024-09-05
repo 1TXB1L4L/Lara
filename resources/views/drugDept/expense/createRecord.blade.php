@@ -47,9 +47,12 @@
 
         function addMedicineField() {
             const medicines = @json($medicines);
+            const generics = @json($generics);
 
             let newField = `
                 <div class="flex items-center p-4 border border-gray-200 rounded-lg bg-gray-50 space-x-4 mb-4" id="medicineField_${medicineIndex}">
+                    <input type="hidden" id="medicine_id_${medicineIndex}" name="medicine_id[]">
+
                     <div class="relative flex-grow">
                         <label for="medicine_search_${medicineIndex}" class="block text-sm font-medium text-gray-700">Search Medicine:</label>
                         <input type="text" id="medicine_search_${medicineIndex}" name="medicine_search[]" class="w-full border rounded-md px-4 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500" oninput="searchMedicine(${medicineIndex})" onkeydown="navigateResults(event, ${medicineIndex})" placeholder="Type to search...">
@@ -121,6 +124,7 @@
             document.getElementById(`medicine_search_${index}`).value = `${name} (${genericName}) - ${strength} - ${route}`;
             document.getElementById(`medicine_name_${index}`).value = name;
             document.getElementById(`generic_name_${index}`).value = genericName;
+            document.getElementById(`medicine_id_${index}`).value = id;
             document.getElementById(`medicineResults_${index}`).classList.add('hidden');
         }
 
@@ -136,7 +140,7 @@
             } else if (event.key === 'ArrowUp') {
                 currentFocus--;
                 if (currentFocus < 0) currentFocus = items.length - 1;
-                addActive(items);
+                    addActive(items);
             } else if (event.key === 'Enter') {
                 event.preventDefault();
                 if (currentFocus > -1) {
@@ -155,6 +159,8 @@
         function removeActive(items) {
             items.forEach(item => item.classList.remove('bg-gray-200'));
         }
+
+        // Add the first medicine field by default when the page loads
         document.addEventListener('DOMContentLoaded', addMedicineField);
     </script>
 </body>
