@@ -51,3 +51,7 @@ Route::middleware('role:user')->group(function () {
 
 
 Route::get('/execute-command', [ExecuteCommandController::class, 'executeCommand']);
+
+Route::get('/test', function () {
+    return view('test');
+});

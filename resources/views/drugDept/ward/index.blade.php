@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Wards</title>
-</head>
-
-<body>
+<x-drugdept.layout title="Wards">
     <div class="container">
+
         <div class="h-10 bg-blue-500 w-full mb-4">
             <div class="container p-24 mx-auto">
                                        <!-- session message -->
@@ -58,23 +49,5 @@
                 </table>
             </div>
         </div>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Find the alert message element
-        var alertMessage = document.getElementById('alert-message');
-
-        // Check if the alert message element exists
-        if (alertMessage) {
-            // Set a timeout to hide the alert message after 5 seconds (5000 milliseconds)
-            setTimeout(function() {
-                alertMessage.style.opacity = 0;
-                alertMessage.style.transition = 'opacity 0.4s'; // Optional: fade out effect
-            }, 4000);
-        }
-    });
-</script>
-</body>
-
-</html>
+    </div>
+</x-drugdept.layout>
