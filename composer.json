@@ -12,7 +12,6 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "ext-json": "*",
-        "ext-sqlite3": "*",
         "ext-pdo_sqlite": "*"
     },
     "require-dev": {
