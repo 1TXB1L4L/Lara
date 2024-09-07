@@ -22,7 +22,7 @@
                 <table class="table-auto border-collapse border border-blue-500 container mx-auto">
                 <tr>
                     <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Date</td>
-                    <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100">{{ $expense->date }}</td>
+                    <td class="py-3 px-6 text-left border border-gray-300 bg-gray-100">{{ $expense->date }} - {{ $expense->ward->ward_name }}</td>
                 </tr>
                 <tr>
                     <td class="py-3 px-6 text-left font-bold border border-gray-300 bg-gray-100">Medicines</td>

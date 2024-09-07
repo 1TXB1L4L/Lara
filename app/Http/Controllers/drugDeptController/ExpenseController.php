@@ -17,7 +17,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $records = Expense::paginate(11);
+        $records = Expense::orderByDesc('date')->paginate(11);
         $expenseRecords = ExpenseRecord::all();
         return view('drugDept.expense.index', compact('records', 'expenseRecords'));
     }
