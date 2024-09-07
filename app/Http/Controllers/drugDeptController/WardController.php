@@ -15,7 +15,7 @@ class WardController extends Controller
      */
     public function index()
     {
-        $wards = Ward::paginate(20);
+        $wards = Ward::paginate(10);
         return view('drugDept.ward.index', [
             'wards' => $wards,
         ]);
