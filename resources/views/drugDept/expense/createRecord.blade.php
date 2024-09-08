@@ -1,30 +1,8 @@
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-100">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Create New Record</title>
-</head>
-
-<body class="h-full">
+<x-drugdept.layout title="Create Record">
     <div class="container p-4 mx-auto">
         <h1 class="text-3xl font-bold text-center mb-6 text-gray-700">Create New Record</h1>
         <hr>
         <br />
-        @if(session('error'))
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <strong class="font-bold">Error!</strong>
-            <span class="block sm:inline">{{ session('error') }}</span>
-        </div>
-        @endif
-        @if(session('status'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-            <strong class="font-bold">Success!</strong>
-            <span class="block sm:inline">{{ session('status') }}</span>
-        </div>
-        @endif
         <br />
         <a href="{{ route('expense.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-6 inline-block">Back</a>
 

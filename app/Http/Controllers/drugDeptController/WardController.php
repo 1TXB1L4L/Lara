@@ -5,8 +5,6 @@ namespace App\Http\Controllers\drugDeptController;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 
 class WardController extends Controller
 {
@@ -48,7 +46,7 @@ class WardController extends Controller
             'ward_status' => $request->ward_status == true ? 1 : 0,
         ]);
 
-        return redirect('/wards')->with('status', 'Ward created successfully.');
+        return redirect('/wards')->with('success', 'Ward created successfully.');
     }
 
     /**
@@ -86,7 +84,7 @@ class WardController extends Controller
             'ward_status' => $request->ward_status == true ? 1 : 0,
         ]);
 
-        return redirect('/wards')->with('status', 'Ward updated successfully.');
+        return redirect('/wards')->with('success', 'Ward updated successfully.');
     }
 
     /**
@@ -95,6 +93,6 @@ class WardController extends Controller
     public function destroy(Ward $ward)
     {
         $ward->delete();
-        return redirect('/wards')->with('status', 'Ward deleted successfully.');
+        return redirect('/wards')->with('info', 'Ward deleted successfully.');
     }
 }

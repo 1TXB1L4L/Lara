@@ -1,33 +1,48 @@
-<div class="flex">
-    @if ($items->onFirstPage())
-        <span class="flex items-center px-4 py-2 mx-1 text-gray-500 bg-white rounded-md cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
-            Previous
-        </span>
-    @else
-        <a href="{{ $items->previousPageUrl() }}" class="flex items-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200">
-            Previous
-        </a>
-    @endif
+@if ($paginator->hasPages())
+    <div class="inline-flex items-center justify-center gap-3 my-4 text-sm">
 
-    @foreach ($items->links()->elements[0] as $page => $url)
-        @if ($page == $items->currentPage())
-            <span class="items-center hidden px-4 py-2 mx-1 text-white bg-blue-600 rounded-md sm:flex dark:bg-blue-500">
-                {{ $page }}
-            </span>
+        {{-- Previous Page Link --}}
+        @if ($paginator->onFirstPage())
+            <span class="text-gray-500">Prev Page</span>
         @else
-            <a href="{{ $url }}" class="items-center hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:flex dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200">
-                {{ $page }}
+            <a
+                href="{{ $paginator->previousPageUrl() }}"
+                class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900"
+            >
+                <span class="sr-only">Prev Page</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-3" viewBox="0 0 20 20" fill="black">
+                    <path
+                        fill-rule="evenodd"
+                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                    />
+                </svg>
             </a>
         @endif
-    @endforeach
 
-    @if ($items->hasMorePages())
-        <a href="{{ $items->nextPageUrl() }}" class="flex items-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200">
-            Next
-        </a>
-    @else
-        <span class="flex items-center px-4 py-2 mx-1 text-gray-500 bg-white rounded-md cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
-            Next
-        </span>
-    @endif
-</div>
+        {{-- Current Page / Total Pages Info --}}
+        <p class="text-xs text-gray-900">
+            {{ $paginator->currentPage() }} <span class="mx-0.25">/</span> {{ $paginator->lastPage() }}
+        </p>
+
+        {{-- Next Page Link --}}
+        @if ($paginator->hasMorePages())
+            <a
+                href="{{ $paginator->nextPageUrl() }}"
+                class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900"
+            >
+                <span class="sr-only">Next Page</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-3" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                        fill-rule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10l-3.293-3.293a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        clip-rule="evenodd"
+                    />
+                </svg>
+            </a>
+        @else
+            <span class="text-gray-500">Next Page</span>
+        @endif
+
+    </div>
+@endif
