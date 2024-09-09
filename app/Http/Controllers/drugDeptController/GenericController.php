@@ -13,7 +13,7 @@ class GenericController extends Controller
      */
     public function index()
     {
-        $generics = Generic::all();
+        $generics = Generic::orderBy('generic_name')->paginate(25);
         return view('drugDept.generic.index')->with('generics', $generics);
     }
 
