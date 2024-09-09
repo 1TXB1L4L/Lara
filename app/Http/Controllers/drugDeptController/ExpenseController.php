@@ -29,7 +29,7 @@ class ExpenseController extends Controller
     {
         $wards = Ward::where('ward_status', 1)->get();
         $medicines = Medicine::where('status', 1)->where('quantity', '>', 0)->orderBy('name')->get();
-        $generics = Generic::where('status', 1)->get();
+        $generics = Generic::where('generic_status', 1)->get();
         return view('drugDept.expense.create', compact('wards', 'medicines', 'generics'));
     }
 
