@@ -16,7 +16,7 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        $medicines = Medicine::with('generic')->get();
+        $medicines = Medicine::orderBy('name')->paginate(25);
         return view('drugDept.medicine.index', [
             'medicines' => $medicines,
         ]);
@@ -83,13 +83,12 @@ class MedicineController extends Controller
                 'image' => $path . $filename,
             ]);
 
-        return redirect('/medicines')->with('status', 'Medicine created successfully.');
-
+            return redirect('/medicines')->with('status', 'Medicine created successfully.');
         } catch (\Illuminate\Database\QueryException $e) {
-        // Get SQL error message
+            // Get SQL error message
             $errorMessage = $e->getMessage();
 
-        // Redirect back with error message
+            // Redirect back with error message
             return redirect()->back()->with('error', $errorMessage);
         }
     }
@@ -168,9 +167,8 @@ class MedicineController extends Controller
             ]);
 
             return redirect('/medicines')->with('status', 'Medicine updated successfully.');
-
         } catch (\Illuminate\Database\QueryException $e) {
-        // Get SQL error message
+            // Get SQL error message
             $errorMessage = $e->getMessage();
             // Redirect back with error message
             return redirect()->back()->with('error', $errorMessage);

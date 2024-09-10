@@ -1,4 +1,5 @@
 @if ($paginator->hasPages())
+
     <div class="inline-flex items-center justify-center gap-3 my-4 text-sm">
 
         {{-- Previous Page Link --}}
