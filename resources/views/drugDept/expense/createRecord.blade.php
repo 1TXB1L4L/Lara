@@ -235,6 +235,12 @@ function updateTotalItems() {
         document.addEventListener("DOMContentLoaded", function () {
             addMedicineField(); // Initialize with one medicine field
         });
+        // Shift + N to Add new Feilds
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'N' && e.shiftKey) {
+                addMedicineField();
+            }
+        });
     </script>
 </body>
 
