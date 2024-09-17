@@ -70,12 +70,9 @@
 
     <script>
         let medicineIndex = 0;
-        let selectedMedicines = new Set();
+        let selectedMedicines = new Map();
 
         function addMedicineField() {
-            const medicines = @json($medicines);
-            const generics = @json($generics);
-
             let newField = `
                 <div class="input-group bg-gray-100 p-4 border border-gray-300 rounded-lg" id="medicineField_${medicineIndex}">
                     <input type="hidden" id="medicine_id_${medicineIndex}" name="medicine_id[]">
@@ -103,6 +100,11 @@
                     <div class="ml-4">
                         <button type="button" class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded" onclick="removeMedicineField(${medicineIndex})">Remove</button>
                     </div>
+
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700">Available Quantity:</label>
+                        <p id="available_quantity_${medicineIndex}" class="text-sm text-gray-600">--</p>
+                    </div>
                 </div>
             `;
 
@@ -112,12 +114,11 @@
         }
 
         function removeMedicineField(index) {
-            document.getElementById(`medicineField_${index}`).remove();
-            // Remove medicine ID from the set if it was selected
             const medicineId = document.getElementById(`medicine_id_${index}`).value;
             if (medicineId) {
-                selectedMedicines.delete(medicineId);
+                selectedMedicines.delete(index);
             }
+            document.getElementById(`medicineField_${index}`).remove();
             updateTotalItems();
         }
 
@@ -128,63 +129,94 @@
 
             const options = medicines.map(med => {
                 const generic = generics.find(gen => gen.id == med.generic_id);
-                const displayText = `${med.name} (${generic ? generic.generic_name : ''}) - ${med.strength} - ${med.route}`;
+                const displayText = `${med.name} (${generic ? generic.generic_name : ''}) - ${med.category} - ${med.strength} - ${med.route}`;
                 return {
                     id: med.id,
-                    text: displayText
+                    text: displayText,
+                    availableQuantity: med.quantity
                 };
             });
 
             selectElement.select2({
                 data: options,
-                placeholder: 'Select a medicine',
+                placeholder: 'Search for a medicine',
                 allowClear: true,
                 width: 'resolve'
             }).on('select2:open', function() {
-                const searchBox = document.querySelector('.select2-search__field');
-                if (searchBox) {
-                    searchBox.focus();
-                }
+                setTimeout(function() {
+                    $('.select2-search__field').focus();
+                }, 0);
             }).on('select2:select', function(e) {
                 const selectedData = e.params.data;
                 const selectedId = selectedData.id;
 
-                // Check for duplicate medicine
-                if (selectedMedicines.has(selectedId)) {
+                let isDuplicate = false;
+                selectedMedicines.forEach((value, key) => {
+                    if (value === selectedId && key !== index) {
+                        isDuplicate = true;
+                    }
+                });
+
+                if (isDuplicate) {
                     alert('This medicine has already been added.');
                     selectElement.val(null).trigger('change');
                     return;
                 }
 
-                selectedMedicines.add(selectedId);
+                selectedMedicines.set(index, selectedId);
                 document.getElementById(`medicine_id_${index}`).value = selectedId;
                 document.getElementById(`medicine_name_${index}`).value = selectedData.text.split(' (')[0];
                 const genericName = selectedData.text.match(/\(([^)]+)\)/);
                 document.getElementById(`generic_name_${index}`).value = genericName ? genericName[1] : '';
+                
+                document.getElementById(`available_quantity_${index}`).innerText = selectedData.availableQuantity;
+
                 updateTotalItems();
             }).on('select2:unselect', function(e) {
-                const unselectedId = e.params.data.id;
-                selectedMedicines.delete(unselectedId);
+                selectedMedicines.delete(index);
+
+                document.getElementById(`medicine_id_${index}`).value = '';
+                document.getElementById(`medicine_name_${index}`).value = '';
+                document.getElementById(`generic_name_${index}`).value = '';
+                document.getElementById(`available_quantity_${index}`).innerText = '--';
+
                 updateTotalItems();
             });
+
+            selectElement.val(null).trigger('change');
         }
 
         function updateTotalItems() {
             const medicineFields = document.querySelectorAll('#medicineFields .input-group');
-            const totalItems = medicineFields.length;
-            medicineFields.forEach(field => {
+            medicineFields.forEach((field, index) => {
                 const selectElement = field.querySelector('select');
                 if (selectElement) {
+                    const currentValue = $(selectElement).val();
                     $(selectElement).select2('destroy').select2({
-                        placeholder: 'Select a medicine',
+                        data: getMedicineOptions(),
+                        placeholder: 'Search for a medicine',
                         allowClear: true,
                         width: 'resolve'
                     });
+                    $(selectElement).val(currentValue).trigger('change');
                 }
             });
         }
 
-        // Add the first medicine field by default when the page loads
+        function getMedicineOptions() {
+            const medicines = @json($medicines);
+            const generics = @json($generics);
+            return medicines.map(med => {
+                const generic = generics.find(gen => gen.id == med.generic_id);
+                const displayText = `${med.name} (${generic ? generic.generic_name : ''}) - ${med.category} - ${med.strength} - ${med.route}`;
+                return {
+                    id: med.id,
+                    text: displayText,
+                    availableQuantity: med.quantity
+                };
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', addMedicineField);
 
         document.addEventListener('keydown', function(event) {

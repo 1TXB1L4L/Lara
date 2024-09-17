@@ -31,12 +31,11 @@ class Medicine extends Model
     ];
 
     protected $casts = [
-        'med_expiry_date' => 'date',
+        'expiry_date' => 'date',
     ];
 
     public function generic()
     {
         return $this->belongsTo(Generic::class);
     }
-
 }
