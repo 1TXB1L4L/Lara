@@ -11,20 +11,24 @@
         .select2-container--default .select2-selection--single {
             height: auto;
         }
+
         .select2-container--default .select2-selection--single .select2-selection__rendered {
             line-height: 1.5;
         }
+
         .medicine-select {
             width: 100%;
         }
+
         .input-group {
             display: flex;
             align-items: center;
-            gap: 1rem; /* Adjust gap as needed */
+            gap: 1rem;
         }
+
         .input-group input,
         .input-group select {
-            height: 2.5rem; /* Adjust height as needed */
+            height: 2.5rem;
         }
     </style>
 </head>
@@ -33,6 +37,7 @@
     <div class="container p-6 mx-auto">
         <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Create New Record</h1>
         <hr class="mb-6">
+
         @if(session('error'))
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4" role="alert">
             <strong class="font-bold">Error!</strong>
@@ -45,6 +50,7 @@
             <span class="block sm:inline">{{ session('status') }}</span>
         </div>
         @endif
+
         <a href="{{ route('expense.index') }}" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mb-6 inline-block">Back</a>
 
         <div class="bg-white shadow-lg rounded-lg p-6">
@@ -133,7 +139,9 @@
                 return {
                     id: med.id,
                     text: displayText,
-                    availableQuantity: med.quantity
+                    availableQuantity: med.quantity,
+                    medicineName: med.name,
+                    genericName: generic ? generic.generic_name : ''
                 };
             });
 
@@ -144,7 +152,7 @@
                 width: 'resolve'
             }).on('select2:open', function() {
                 setTimeout(function() {
-                    $('.select2-search__field').focus();
+                    document.querySelector('.select2-search__field').focus();
                 }, 0);
             }).on('select2:select', function(e) {
                 const selectedData = e.params.data;
@@ -164,11 +172,17 @@
                 }
 
                 selectedMedicines.set(index, selectedId);
+
+                // Set hidden medicine ID
                 document.getElementById(`medicine_id_${index}`).value = selectedId;
-                document.getElementById(`medicine_name_${index}`).value = selectedData.text.split(' (')[0];
-                const genericName = selectedData.text.match(/\(([^)]+)\)/);
-                document.getElementById(`generic_name_${index}`).value = genericName ? genericName[1] : '';
-                
+
+                // Set the medicine name
+                document.getElementById(`medicine_name_${index}`).value = selectedData.medicineName;
+
+                // Set the generic name
+                document.getElementById(`generic_name_${index}`).value = selectedData.genericName;
+
+                // Set available quantity
                 document.getElementById(`available_quantity_${index}`).innerText = selectedData.availableQuantity;
 
                 updateTotalItems();
@@ -185,8 +199,7 @@
 
             selectElement.val(null).trigger('change');
         }
-
-        function updateTotalItems() {
+function updateTotalItems() {
             const medicineFields = document.querySelectorAll('#medicineFields .input-group');
             medicineFields.forEach((field, index) => {
                 const selectElement = field.querySelector('select');
@@ -212,25 +225,17 @@
                 return {
                     id: med.id,
                     text: displayText,
-                    availableQuantity: med.quantity
+                    availableQuantity: med.quantity,
+                    medicineName: med.name,
+                    genericName: generic ? generic.generic_name : ''
                 };
             });
         }
 
-        document.addEventListener('DOMContentLoaded', addMedicineField);
-
-        document.addEventListener('keydown', function(event) {
-            if (event.ctrlKey && event.key === 'Enter') {
-                event.preventDefault();
-                document.getElementById('expenseForm').submit();
-            }
-        });
-
-        document.addEventListener('keydown', function(event) {
-            if (event.shiftKey && event.key === 'N') {
-                addMedicineField();
-            }
+        document.addEventListener("DOMContentLoaded", function () {
+            addMedicineField(); // Initialize with one medicine field
         });
     </script>
 </body>
+
 </html>
