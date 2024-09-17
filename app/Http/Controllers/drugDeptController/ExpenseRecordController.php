@@ -23,12 +23,12 @@ class ExpenseRecordController extends Controller
      */
     public function create(Request $request)
     {
-        $status = request('status');
+        $message = request('success');
         $expense_id = request('expense_id');
         $medicines = Medicine::where('status', 1)->where('quantity', '>', 0)->orderBy('name')->get();
         $generics = Generic::all();
 
-        return view('drugDept.expense.createRecord', compact('status', 'expense_id', 'medicines', 'generics'));
+        return view('drugDept.expense.createRecord', compact('message', 'expense_id', 'medicines', 'generics'));
     }
 
     /**
@@ -68,7 +68,7 @@ class ExpenseRecordController extends Controller
             }
 
             // Redirect back to the expense list with a success message
-            return redirect()->route('expense.index')->with('status', 'Expense records created and quantities updated successfully');
+            return redirect()->route('expense.index')->with('success', 'Expense records created and quantities updated successfully');
         } catch (\Exception $e) {
             // Handle errors and redirect back with an error message
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());

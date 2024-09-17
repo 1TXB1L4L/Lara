@@ -50,7 +50,7 @@ class GenericController extends Controller
             'generic_status' => $request->generic_status == true ? 1 : 0,
         ]);
 
-        return redirect('/generics')->with('status', 'Generic created successfully.');
+        return redirect('/generics')->with('success', 'Generic created successfully.');
     }
 
     /**_
@@ -93,7 +93,7 @@ class GenericController extends Controller
             'generic_status' => $request->generic_status == true ? 1 : 0,
         ]);
 
-        return redirect('/generics')->with('status', 'Generic updated successfully.');
+        return redirect('/generics')->with('success', 'Generic updated successfully.');
     }
 
     /**
@@ -102,6 +102,6 @@ class GenericController extends Controller
     public function destroy(Generic $generic)
     {
         $generic->delete();
-        return redirect('/generics')->with('status', 'Generic deleted successfully.');
+        return redirect('/generics')->with('info', 'Generic deleted successfully.');
     }
 }

@@ -53,7 +53,7 @@ class ExpenseController extends Controller
             ]);
 
             return redirect()->route('expenseRecord.create', ['expense_id' => $expense->id])
-                ->with('status', 'Expense created successfully');
+                ->with('success', 'Expense created successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
@@ -100,7 +100,7 @@ class ExpenseController extends Controller
             $expense = Expense::findOrFail($id);
             $expense->delete();
 
-            return redirect()->route('expense.index')->with('status', 'Expense deleted successfully');
+            return redirect()->route('expense.index')->with('info', 'Expense deleted successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
