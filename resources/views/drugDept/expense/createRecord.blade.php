@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <title>Create New Record</title>
@@ -16,19 +16,64 @@
             line-height: 1.5;
         }
 
-        .medicine-select {
-            width: 100%;
+        .input-container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .input-group {
             display: flex;
             align-items: center;
             gap: 1rem;
+            flex-wrap: nowrap;
+            overflow-x: auto;
         }
 
         .input-group input,
         .input-group select {
-            height: 2.5rem;
+            flex: 1 1 auto;
+            min-width: 150px; /* Minimum width for inputs */
+            max-width: 300px; /* Maximum width for inputs */
+            padding: 0.5rem;
+        }
+
+        /* Ensure all inputs are in a single line */
+        .input-group {
+            white-space: nowrap;
+        }
+
+        .input-group input[type="number"] {
+            width: 120px; /* Fixed width for quantity input */
+        }
+
+        .input-group button {
+            flex-shrink: 0; /* Buttons stay at their size */
+        }
+
+        /* Mobile devices (max-width: 768px) */
+        @media only screen and (max-width: 768px) {
+            .input-group input,
+            .input-group select {
+                min-width: 100px; /* Minimum width for inputs on mobile */
+            }
+        }
+
+        /* Tablet devices (min-width: 769px and max-width: 1024px) */
+        @media only screen and (min-width: 769px) and (max-width: 1024px) {
+            .input-group input,
+            .input-group select {
+                min-width: 120px; /* Minimum width on tablet */
+                max-width: 250px; /* Maximum width on tablet */
+            }
+        }
+
+        /* Desktop devices (min-width: 1025px) */
+        @media only screen and (min-width: 1025px) {
+            .input-group input,
+            .input-group select {
+                min-width: 150px; /* Minimum width on desktop */
+                max-width: 300px; /* Maximum width on desktop */
+            }
         }
     </style>
 </head>
@@ -51,7 +96,7 @@
         </div>
         @endif
 
-        <a href="{{ route('expense.index') }}" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mb-6 inline-block">Back</a>
+        <a href="{{ route('expense.index') }}" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mb-6 inline-block" autofocus>Back</a>
 
         <div class="bg-white shadow-lg rounded-lg p-6">
             <form id="expenseForm" class="space-y-6" action="{{ route('expenseRecord.store') }}" method="POST">
@@ -164,7 +209,6 @@
                         isDuplicate = true;
                     }
                 });
-
                 if (isDuplicate) {
                     alert('This medicine has already been added.');
                     selectElement.val(null).trigger('change');
@@ -199,7 +243,8 @@
 
             selectElement.val(null).trigger('change');
         }
-function updateTotalItems() {
+
+        function updateTotalItems() {
             const medicineFields = document.querySelectorAll('#medicineFields .input-group');
             medicineFields.forEach((field, index) => {
                 const selectElement = field.querySelector('select');
@@ -233,9 +278,13 @@ function updateTotalItems() {
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            addMedicineField(); // Initialize with one medicine field
+            addMedicineField();
+            addMedicineField();
+            addMedicineField();
+            addMedicineField();
         });
-        // Shift + N to Add new Feilds
+
+        // Shift + N to Add new Fields
         document.addEventListener('keydown', function (e) {
             if (e.key === 'N' && e.shiftKey) {
                 addMedicineField();
