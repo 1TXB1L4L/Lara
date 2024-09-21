@@ -33,7 +33,7 @@
         .input-group select {
             flex: 1 1 auto;
             min-width: 150px; /* Minimum width for inputs */
-            max-width: 300px; /* Maximum width for inputs */
+            max-width: 250px; /* Maximum width for inputs */
             padding: 0.5rem;
         }
 
@@ -63,7 +63,7 @@
             .input-group input,
             .input-group select {
                 min-width: 120px; /* Minimum width on tablet */
-                max-width: 250px; /* Maximum width on tablet */
+                max-width: 220px; /* Maximum width on tablet */
             }
         }
 
@@ -72,7 +72,7 @@
             .input-group input,
             .input-group select {
                 min-width: 150px; /* Minimum width on desktop */
-                max-width: 300px; /* Maximum width on desktop */
+                max-width: 250px; /* Maximum width on desktop */
             }
         }
     </style>

@@ -10,7 +10,7 @@ use App\Http\Controllers\drugDeptController\ExpenseRecordController;
 use App\Http\Controllers\ExecuteCommandController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing');
 });
 
 Route::middleware([
