@@ -5,9 +5,9 @@ namespace App\Http\Controllers\drugDeptController;
 use App\Http\Controllers\Controller;
 use App\Models\Medicine;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Models\Generic;
+
 
 class MedicineController extends Controller
 {

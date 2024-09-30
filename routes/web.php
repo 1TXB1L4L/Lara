@@ -3,10 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\drugDeptController\WardController;
 use App\Http\Controllers\drugDeptController\MedicineController;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\drugDeptController\ExpenseController;
 use App\Http\Controllers\drugDeptController\GenericController;
 use App\Http\Controllers\drugDeptController\ExpenseRecordController;
+use App\Http\Controllers\drugDeptController\IndentController;
 use App\Http\Controllers\ExecuteCommandController;
 
 Route::get('/', function () {
@@ -38,9 +38,13 @@ Route::middleware('role:admin')->group(function () {
     Route::resource('wards', WardController::class);
     Route::resource('medicines', MedicineController::class);
     Route::resource('generics', GenericController::class);
-    Route::resource('expenseRecord', expenseRecordController::class);
+    Route::resource('indents', IndentController::class);
+    Route::resource('expenseRecord', ExpenseRecordController::class);
     Route::resource('expense', ExpenseController::class);
     Route::get('expenseRecord/create/{expense_id}', [ExpenseRecordController::class, 'create'])->name('expenseRecord.create');
+    Route::put('indents/{indent}/approve', [IndentController::class, 'approve'])->name('indents.approve');
+    Route::put('indents/{indent}/reject', [IndentController::class, 'reject'])->name('indents.reject');
+    Route::put('indents/{indent}/set-pending', [IndentController::class, 'setPending'])->name('indents.setPending');
 });
 
 Route::middleware('role:user')->group(function () {
