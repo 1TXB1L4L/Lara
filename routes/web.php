@@ -45,6 +45,8 @@ Route::middleware('role:admin')->group(function () {
     Route::put('indents/{indent}/approve', [IndentController::class, 'approve'])->name('indents.approve');
     Route::put('indents/{indent}/reject', [IndentController::class, 'reject'])->name('indents.reject');
     Route::put('indents/{indent}/set-pending', [IndentController::class, 'setPending'])->name('indents.setPending');
+    Route::put('expenseRecord/{id}', [ExpenseRecordController::class, 'update'])->name('expenseRecord.update');
+    Route::delete('expenseRecord/{id}', [ExpenseRecordController::class, 'destroy'])->name('expenseRecord.destroy');
 });
 
 Route::middleware('role:user')->group(function () {

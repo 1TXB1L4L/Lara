@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ExpenseRecord;
 use App\Models\Medicine;
 use App\Models\Generic;
+use Illuminate\Support\Facades\DB;
 
 class ExpenseRecordController extends Controller
 {
@@ -92,16 +93,70 @@ class ExpenseRecordController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $expenseRecord = ExpenseRecord::findOrFail($id);
+            $medicine = Medicine::findOrFail($expenseRecord->medicine_id);
+
+            $oldQuantity = $expenseRecord->quantity;
+            $newQuantity = $request->quantity;
+
+            // Calculate the difference
+            $quantityDifference = $newQuantity - $oldQuantity;
+
+            // Check if we have enough medicine in stock
+            if ($medicine->quantity < $quantityDifference) {
+                throw new \Exception("Not enough medicine in stock. Available: {$medicine->quantity}");
+            }
+
+            // Update the ExpenseRecord
+            $expenseRecord->update([
+                'quantity' => $newQuantity,
+            ]);
+
+            // Update the Medicine quantity
+            $medicine->quantity -= $quantityDifference;
+            $medicine->save();
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Quantity updated successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $expenseRecord = ExpenseRecord::findOrFail($id);
+            $medicine = Medicine::findOrFail($expenseRecord->medicine_id);
+
+            // Return the quantity to the medicine stock
+            $medicine->quantity += $expenseRecord->quantity;
+            $medicine->save();
+
+            $expenseRecord->delete();
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Record deleted successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 }
