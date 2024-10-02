@@ -13,28 +13,10 @@
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                         @foreach($medicines as $medicine)
                             <option value="{{ $medicine->id }}">
-                                {{ $medicine->medicine_name }} ({{ $medicine->generic_name }})
+                                {{ $medicine->name }} ({{ $medicine->generic->generic_name }})
                             </option>
                         @endforeach
                     </select>
-                </div>
-
-                <!-- Medicine Name -->
-                <div class="mb-5">
-                    <label for="medicine_name" class="mb-3 block text-base font-medium text-[#07074D]">
-                        Medicine Name
-                    </label>
-                    <input type="text" name="medicine_name" id="medicine_name" placeholder="Enter Medicine Name"
-                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                </div>
-
-                <!-- Generic Name -->
-                <div class="mb-5">
-                    <label for="generic_name" class="mb-3 block text-base font-medium text-[#07074D]">
-                        Generic Name
-                    </label>
-                    <input type="text" name="generic_name" id="generic_name" placeholder="Enter Generic Name"
-                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
 
                 <!-- Indent Date -->

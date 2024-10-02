@@ -2,7 +2,7 @@
     <div class="container">
 
         <div class="container p-24 mx-auto">
-            <h1 class="text-2xl font-bold text-center mb-4">Generics</h1>
+            <h1 class="text-2xl font-bold text-center mb-4">Medicines & Sugical Items</h1>
             <a href="{{ route('medicines.create') }}"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New Medicine</a>
             <br />
