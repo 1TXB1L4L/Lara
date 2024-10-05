@@ -14,9 +14,22 @@ class MedicineController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $medicines = Medicine::orderBy('name')->paginate(25);
+        $query = Medicine::query();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'LIKE', "%{$searchTerm}%")
+                    ->orWhereHas('generic', function ($q) use ($searchTerm) {
+                        $q->where('generic_name', 'LIKE', "%{$searchTerm}%");
+                    });
+            });
+        }
+
+        $medicines = $query->orderBy('name')->paginate(25);
+
         return view('drugDept.medicine.index', [
             'medicines' => $medicines,
         ]);

@@ -16,7 +16,7 @@
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Date</th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Ward</th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Totals Items</th>
-                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Action</th>
+                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">Action</th>
                             </tr>
                         </thead>
 
@@ -30,7 +30,7 @@
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-2 text-gray-700">{{ $record->getTotalRecordsAttribute() }}
                                     </td>
-                                    <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">
                                         <span
                                             class="inline-flex -space-x-px overflow-hidden rounded-md border bg-white shadow-sm pr-2 pl-2 ml-2 mr-2">
                                             <button
@@ -48,23 +48,23 @@
                                             <button
                                                 class="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative"><a
                                                     href="{{ route('expense.show', $record->id) }}"
-                                                    class="text-blue-500 hover:underline">View Record</a>
+                                                    class="text-sm hover:underline">View Record</a>
                                             </button>
 
-                                            <button
+                                            <!--<button
                                                 class="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative"><a
                                                     href="{{ route('expenseRecord.edit', $record->id) }}"
                                                     class="text-yellow-500 hover:underline font-bold">Edit Record</a>
-                                            </button>
+                                            </button>-->
 
-                                            <button
+                                            <!--<button
                                                 class="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative">
                                                 <form action="{{ route('expense.destroy', $record->id) }}" method="POST"
                                                     class="inline text-center">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                        class="text-red-500 hover:underline">Delete</button>
+                                                        class="text-red-500 hover:underline">Delete</button>-->
                                                 </form>
                                             </button>
                                         </span>

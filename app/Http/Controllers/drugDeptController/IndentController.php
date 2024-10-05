@@ -35,7 +35,7 @@ class IndentController extends Controller
      */
     public function create()
     {
-        $medicines = Medicine::orderBy('medicine_name')->get();
+        $medicines = Medicine::orderBy('name')->get();
         return view('drugDept.indent.create', compact('medicines'));
     }
 
@@ -47,28 +47,27 @@ class IndentController extends Controller
         $request->validate($this->validationRules());
 
         DB::transaction(function () use ($request) {
+            // Fetch the selected medicine to get the name and generic name
+            $medicine = Medicine::findOrFail($request->medicine_id);
+
             // Creating the indent
-            Indent::create([
+            $indent = Indent::create([
                 'medicine_id' => $request->medicine_id,
-                'medicine_name' => $request->medicine_name,
-                'generic_name' => $request->generic_name,
-                'quantity' => $request->quantity,
-                'indent_quantity' => $request->indent_quantity,
-                'indent_amount' => $request->indent_amount,
+                'medicine_name' => $medicine->name, // Set the medicine name
+                'generic_name' => $medicine->generic->generic_name, // Set the generic name
+                'quantity' => $request->indent_quantity, // Updated to match the migration field
                 'indent_date' => $request->indent_date,
                 'indent_status' => $request->indent_status,
                 'indent_remarks' => $request->indent_remarks,
-                'previous_quantity' => $request->previous_quantity,
+                'user_id' => auth()->id(),
+                'previous_quantity' => $medicine->quantity, // Storing previous quantity
+                'batch_number' => $request->batch_number,
+                'expiry_date' => $request->expiry_date,
             ]);
 
             // Updating the medicine quantity
-            $medicine = Medicine::find($request->medicine_id);
-            if ($medicine) {
-                $medicine->quantity += $request->indent_quantity;
-                $medicine->save();
-            } else {
-                throw new \Exception('Medicine not found.');
-            }
+            $medicine->quantity -= $request->indent_quantity; // Decrementing the quantity as it's being indented
+            $medicine->save();
         });
 
         return redirect('/indents')->with('success', 'Indent created successfully.');
@@ -87,7 +86,7 @@ class IndentController extends Controller
      */
     public function edit(Indent $indent)
     {
-        $medicines = Medicine::orderBy('medicine_name')->get();
+        $medicines = Medicine::orderBy('name')->get();
         return view('drugDept.indent.edit', compact('indent', 'medicines'));
     }
 
@@ -98,18 +97,27 @@ class IndentController extends Controller
     {
         $request->validate($this->validationRules());
 
-        $indent->update([
-            'medicine_id' => $request->medicine_id,
-            'medicine_name' => $request->medicine_name,
-            'generic_name' => $request->generic_name,
-            'quantity' => $request->quantity,
-            'indent_quantity' => $request->indent_quantity,
-            'indent_amount' => $request->indent_amount,
-            'indent_date' => $request->indent_date,
-            'indent_status' => $request->indent_status,
-            'indent_remarks' => $request->indent_remarks,
-            'previous_quantity' => $request->previous_quantity,
-        ]);
+        DB::transaction(function () use ($request, $indent) {
+            // Fetch the selected medicine to get the name and generic name
+            $medicine = Medicine::findOrFail($request->medicine_id);
+
+            // Update the indent
+            $indent->update([
+                'medicine_id' => $request->medicine_id,
+                'medicine_name' => $medicine->name, // Set the medicine name
+                'generic_name' => $medicine->generic->generic_name, // Set the generic name
+                'quantity' => $request->indent_quantity, // Updated to match the migration field
+                'indent_date' => $request->indent_date,
+                'indent_status' => $request->indent_status,
+                'indent_remarks' => $request->indent_remarks,
+                'batch_number' => $request->batch_number,
+                'expiry_date' => $request->expiry_date,
+            ]);
+
+            // Adjust the medicine quantity based on the updated indent
+            $medicine->quantity -= $request->indent_quantity; // Decrement quantity accordingly
+            $medicine->save();
+        });
 
         return redirect('/indents')->with('success', 'Indent updated successfully.');
     }
@@ -129,16 +137,13 @@ class IndentController extends Controller
     private function validationRules()
     {
         return [
-            'medicine_id' => 'required',
-            'medicine_name' => 'required',
-            'generic_name' => 'required',
-            'quantity' => 'required|numeric',
-            'indent_quantity' => 'required|numeric',
-            'indent_amount' => 'required|numeric',
-            'indent_date' => 'required',
-            'indent_status' => 'required',
-            'indent_remarks' => 'required',
-            'previous_quantity' => 'required|numeric',
+            'medicine_id' => 'required|exists:medicines,id',
+            'quantity' => 'required|numeric|min:1', // Updated to match the migration field
+            'indent_date' => 'required|date',
+            'indent_status' => 'required|string',
+            'indent_remarks' => 'nullable|string',
+            'batch_number' => 'nullable|string',
+            'expiry_date' => 'nullable|date',
         ];
     }
 }

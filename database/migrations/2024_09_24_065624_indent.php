@@ -6,30 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('indents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('medicine_id')->constrained(); // Assuming 'medicine' table exists
+            $table->foreignId('medicine_id')->constrained();
             $table->string('medicine_name');
             $table->string('generic_name');
-            $table->integer('quantity');
-            $table->integer('indent_quantity');
-            $table->integer('indent_amount');
-            $table->date('indent_date'); // Change to 'date' type
-            $table->string('indent_status'); // You could use an enum if you want strict status control
-            $table->string('indent_remarks')->nullable(); // Make this nullable if not required
-            $table->integer('previous_quantity')->nullable(); // Nullable if optional
+            $table->unsignedInteger('quantity'); // Assuming quantities should be non-negative
+            $table->date('indent_date');
+            $table->enum('indent_status', ['Active', 'Inactive']); // Enum for better control over status
+            $table->string('indent_remarks')->nullable();
+            $table->unsignedInteger('previous_quantity')->nullable(); // Nullable and non-negative
+            $table->string('batch_number')->nullable(); // Changed from "batch no." to follow naming conventions
+            $table->date('expiry_date')->nullable();
+            $table->boolean('received')->default(false);
+            $table->foreignId('user_id')->constrained();
+            $table->boolean('is_returned')->default(false);
             $table->timestamps();
+
+            // Indexing common fields for performance
+            $table->index('medicine_id');
+            $table->index('indent_status');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('indents');

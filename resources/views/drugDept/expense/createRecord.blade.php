@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <title>Create New Record</title>
+
     <style>
         .select2-container--default .select2-selection--single {
             height: auto;
@@ -135,12 +136,12 @@
 
                     <div class="flex-1">
                         <label for="medicine_name_${medicineIndex}" class="block text-sm font-medium text-gray-700">Medicine Name:</label>
-                        <input type="text" id="medicine_name_${medicineIndex}" name="medicine_name[]" class="border rounded-md px-4 py-2 mt-1" readonly>
+                        <input type="text" id="medicine_name_${medicineIndex}" name="medicine_name[]" class="border rounded-md px-4 py-2 mt-1" readonly tabindex="-1">
                     </div>
 
                     <div class="flex-1">
                         <label for="generic_name_${medicineIndex}" class="block text-sm font-medium text-gray-700">Generic Name:</label>
-                        <input type="text" id="generic_name_${medicineIndex}" name="generic_name[]" class="border rounded-md px-4 py-2 mt-1" readonly>
+                        <input type="text" id="generic_name_${medicineIndex}" name="generic_name[]" class="border rounded-md px-4 py-2 mt-1" readonly tabindex="-1">
                     </div>
 
                     <div class="flex-1">
@@ -229,6 +230,9 @@
                 // Set available quantity
                 document.getElementById(`available_quantity_${index}`).innerText = selectedData.availableQuantity;
 
+                // Focus on quantity field after selection
+                document.getElementById(`quantity_${index}`).focus();
+
                 updateTotalItems();
             }).on('select2:unselect', function(e) {
                 selectedMedicines.delete(index);
@@ -282,6 +286,52 @@
             addMedicineField();
             addMedicineField();
             addMedicineField();
+
+            // Prevent focusing on readonly fields
+            document.addEventListener('focusin', function(e) {
+                if (e.target.readOnly) {
+                    e.target.blur();
+                    let focusableElements = Array.from(document.querySelectorAll('button, [href], input:not([readonly]), select, textarea, [tabindex]:not([tabindex="-1"])'));
+                    let index = focusableElements.indexOf(e.target);
+                    if (index > -1 && index < focusableElements.length - 1) {
+                        focusableElements[index + 1].focus();
+                    }
+                }
+            });
+
+            // Prevent form submission on Enter key press in input fields
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+                    e.preventDefault();
+                }
+            });
+
+            // Submit form only when Save button is focused and Enter is pressed
+            document.querySelector('button[type="submit"]').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    document.getElementById('expenseForm').submit();
+                }
+            });
+
+            // Handle form submission
+            document.getElementById('expenseForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Remove empty fields before submitting
+                const medicineFields = document.querySelectorAll('#medicineFields .input-group');
+                medicineFields.forEach((field) => {
+                    const medicineId = field.querySelector('input[name="medicine_id[]"]').value;
+                    const quantity = field.querySelector('input[name="quantity[]"]').value;
+
+                    if (!medicineId || !quantity) {
+                        field.remove();
+                    }
+                });
+
+                // Submit the form
+                this.submit();
+            });
         });
 
         // Shift + N to Add new Fields

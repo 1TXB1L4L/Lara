@@ -66,7 +66,6 @@ class ExpenseController extends Controller
     {
         $expense = Expense::findOrFail($id);
         $expenseRecords = ExpenseRecord::where('expense_id', $id)->get();
-        // dd($expenseRecords);
 
         return view('drugDept.expense.showRecord', compact('expense', 'expenseRecords'));
     }
@@ -88,7 +87,24 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'date' => 'required',
+            'ward_id' => 'required|exists:wards,id',
+            'note' => 'nullable|string',
+        ]);
+
+        try {
+            $expense = Expense::findOrFail($id);
+            $expense->update([
+                'date' => $request->date,
+                'ward_id' => $request->ward_id,
+                'note' => $request->note,
+            ]);
+
+            return redirect()->route('expense.index')->with('success', 'Expense updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 
     /**

@@ -1,13 +1,25 @@
 <x-drugdept.layout title="Medicine List">
     <div class="container">
-
         <div class="container p-24 mx-auto">
-            <h1 class="text-2xl font-bold text-center mb-4">Medicines & Sugical Items</h1>
+            <h1 class="text-2xl font-bold text-center mb-4">Medicines & Surgical Items</h1>
             <a href="{{ route('medicines.create') }}"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New Medicine</a>
             <br />
             <br />
-            <br />
+
+            <!-- Add search form -->
+            <form action="{{ route('medicines.index') }}" method="GET" class="mb-4">
+                <div class="flex items-center">
+                    <input type="text" name="search" placeholder="Search by medicine or generic name"
+                           class="border rounded-l px-4 py-2 w-full"
+                           value="{{ request('search') }}">
+                    <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r">
+                        Search
+                    </button>
+                </div>
+            </form>
+
             <div class="rounded-lg border border-gray-200">
                 <div class="overflow-x-auto rounded-t-lg">
                     <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
@@ -16,7 +28,7 @@
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Sr No.</th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Medicine Name</th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Generic Name</th>
-                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Quentity</th>
+                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Quantity</th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Status</th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Image</th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Action</th>
@@ -35,7 +47,7 @@
                                     @if ($medicine->image == null)
                                         <p class="text-gray-700">No Image</p>
                                     @else
-                                        <img src="{{ asset('$medicine->image') }}" alt="Medicine Image" class="w-16 h-16 rounded-full">
+                                        <img src="{{ asset($medicine->image) }}" alt="Medicine Image" class="w-16 h-16 rounded-full">
                                     @endif
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-2 text-gray-700">
@@ -70,9 +82,9 @@
                     </table>
                 </div>
             </div>
-        <div class="flex items-center justify-center gap-3 my-4 text-sm">
-        <x-drugdept.pagination :paginator="$medicines" />
-        </div>
+            <div class="flex items-center justify-center gap-3 my-4 text-sm">
+                <x-drugdept.pagination :paginator="$medicines" />
+            </div>
         </div>
     </div>
 </x-drugdept.layout>

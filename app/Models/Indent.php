@@ -4,13 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Medicine;
+use App\Models\User;
 
 class Indent extends Model
 {
     use HasFactory;
 
-    // Define the table if it's not plural (optional, if the table is 'indents', Laravel will detect it automatically)
+    // Define the table name (optional, Laravel auto-detects plural names)
     protected $table = 'indents';
+
+    // Status constants
+    const STATUS_ACTIVE = 'Active';
+    const STATUS_INACTIVE = 'Inactive';
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +34,11 @@ class Indent extends Model
         'indent_status',
         'indent_remarks',
         'previous_quantity',
+        'batch_number',
+        'expiry_date',
+        'received',
+        'user_id',
+        'is_returned',
     ];
 
     /**
@@ -39,36 +50,33 @@ class Indent extends Model
     }
 
     /**
-     * Scope a query to only include pending indents.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Get the user who created the indent.
      */
-    public function scopePending($query)
+    public function user()
     {
-        return $query->where('indent_status', 'pending');
+        return $this->belongsTo(User::class); // Assuming you have a User model
     }
 
     /**
-     * Scope a query to only include approved indents.
+     * Scope a query to only include active indents.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeApproved($query)
+    public function scopeActive($query)
     {
-        return $query->where('indent_status', 'approved');
+        return $query->where('indent_status', self::STATUS_ACTIVE);
     }
 
     /**
-     * Scope a query to only include rejected indents.
+     * Scope a query to only include inactive indents.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeRejected($query)
+    public function scopeInactive($query)
     {
-        return $query->where('indent_status', 'rejected');
+        return $query->where('indent_status', self::STATUS_INACTIVE);
     }
 
     /**
@@ -79,9 +87,47 @@ class Indent extends Model
      */
     public function updateStatus($status)
     {
-        if (in_array($status, ['pending', 'approved', 'rejected'])) {
+        if (in_array($status, [self::STATUS_ACTIVE, self::STATUS_INACTIVE])) {
             $this->indent_status = $status;
             $this->save();
         }
+    }
+
+    /**
+     * Check if the indent has been received.
+     *
+     * @return bool
+     */
+    public function isReceived()
+    {
+        return $this->received;
+    }
+
+    /**
+     * Mark the indent as received.
+     */
+    public function markAsReceived()
+    {
+        $this->received = true;
+        $this->save();
+    }
+
+    /**
+     * Check if the indent has been returned.
+     *
+     * @return bool
+     */
+    public function isReturned()
+    {
+        return $this->is_returned;
+    }
+
+    /**
+     * Mark the indent as returned.
+     */
+    public function markAsReturned()
+    {
+        $this->is_returned = true;
+        $this->save();
     }
 }
