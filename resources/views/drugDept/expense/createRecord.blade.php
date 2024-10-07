@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-100">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <title>Create New Record</title>
-
+<x-drugdept.layout title="Create New Record">
     <style>
         .select2-container--default .select2-selection--single {
             height: auto;
@@ -33,73 +24,81 @@
         .input-group input,
         .input-group select {
             flex: 1 1 auto;
-            min-width: 150px; /* Minimum width for inputs */
-            max-width: 250px; /* Maximum width for inputs */
+            min-width: 150px;
+            max-width: 250px;
             padding: 0.5rem;
         }
 
-        /* Ensure all inputs are in a single line */
         .input-group {
             white-space: nowrap;
         }
 
         .input-group input[type="number"] {
-            width: 120px; /* Fixed width for quantity input */
+            width: 120px;
         }
 
         .input-group button {
-            flex-shrink: 0; /* Buttons stay at their size */
+            flex-shrink: 0;
         }
 
-        /* Mobile devices (max-width: 768px) */
         @media only screen and (max-width: 768px) {
             .input-group input,
             .input-group select {
-                min-width: 100px; /* Minimum width for inputs on mobile */
+                min-width: 100px;
             }
         }
 
-        /* Tablet devices (min-width: 769px and max-width: 1024px) */
         @media only screen and (min-width: 769px) and (max-width: 1024px) {
             .input-group input,
             .input-group select {
-                min-width: 120px; /* Minimum width on tablet */
-                max-width: 220px; /* Maximum width on tablet */
+                min-width: 120px;
+                max-width: 220px;
             }
         }
 
-        /* Desktop devices (min-width: 1025px) */
         @media only screen and (min-width: 1025px) {
             .input-group input,
             .input-group select {
-                min-width: 150px; /* Minimum width on desktop */
-                max-width: 250px; /* Maximum width on desktop */
+                min-width: 150px;
+                max-width: 250px;
             }
         }
+
+        /* Dark mode styles */
+        .dark .select2-container--default .select2-selection--single {
+            background-color: #374151;
+            border-color: #4B5563;
+        }
+
+        .dark .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #D1D5DB;
+        }
+
+        .dark .select2-container--default .select2-results__option[aria-selected=true] {
+            background-color: #4B5563;
+        }
+
+        .dark .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #6B7280;
+        }
+
+        .dark .select2-dropdown {
+            background-color: #374151;
+            border-color: #4B5563;
+        }
+
+        .dark .select2-search__field {
+            background-color: #4B5563;
+            color: #D1D5DB;
+        }
     </style>
-</head>
+    <div class="p-6 mx-auto">
+        <h1 class="mb-8 text-4xl font-bold text-center text-gray-800 dark:text-white">Create New Record</h1>
+        <hr class="mb-6 border-gray-300 dark:border-gray-600">
 
-<body class="h-full bg-gray-50">
-    <div class="container p-6 mx-auto">
-        <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Create New Record</h1>
-        <hr class="mb-6">
+        <a href="{{ route('expense.index') }}" class="inline-block px-4 py-2 mb-6 font-bold text-white bg-blue-600 rounded hover:bg-blue-800 dark:bg-blue-500 dark:hover:bg-blue-700" autofocus>Back</a>
 
-        @if(session('error'))
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4" role="alert">
-            <strong class="font-bold">Error!</strong>
-            <span class="block sm:inline">{{ session('error') }}</span>
-        </div>
-        @endif
-        @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4" role="alert">
-            <strong class="font-bold">Success!</strong>
-            <span class="block sm:inline">{{ session('status') }}</span>
-        </div>
-        @endif
-
-        <a href="{{ route('expense.index') }}" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mb-6 inline-block" autofocus>Back</a>
-
-        <div class="bg-white shadow-lg rounded-lg p-6">
+        <div class="p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
             <form id="expenseForm" class="space-y-6" action="{{ route('expenseRecord.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="expense_id" value="{{ $expense_id }}">
@@ -107,55 +106,51 @@
                 <div id="medicineFields" class="space-y-4"></div>
 
                 <div class="text-center">
-                    <button type="button" class="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded" onclick="addMedicineField()">Add Medicine</button>
+                    <button type="button" class="px-4 py-2 font-bold text-white bg-green-600 rounded hover:bg-green-800 dark:bg-green-500 dark:hover:bg-green-700" onclick="addMedicineField()">Add Medicine</button>
                 </div>
 
-                <div class="text-center mt-4">
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">Save</button>
+                <div class="mt-4 text-center">
+                    <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-600 rounded hover:bg-blue-800 dark:bg-blue-500 dark:hover:bg-blue-700">Save</button>
                 </div>
             </form>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
     <script>
         let medicineIndex = 0;
         let selectedMedicines = new Map();
 
         function addMedicineField() {
             let newField = `
-                <div class="input-group bg-gray-100 p-4 border border-gray-300 rounded-lg" id="medicineField_${medicineIndex}">
+                <div class="p-4 bg-gray-100 border border-gray-300 rounded-lg input-group dark:bg-gray-700 dark:border-gray-600" id="medicineField_${medicineIndex}">
                     <input type="hidden" id="medicine_id_${medicineIndex}" name="medicine_id[]">
 
                     <div class="flex-1">
-                        <label for="medicine_search_${medicineIndex}" class="block text-sm font-medium text-gray-700">Search Medicine:</label>
-                        <select id="medicine_search_${medicineIndex}" name="medicine_search[]" class="medicine-select border rounded-md px-4 py-2 mt-1"></select>
+                        <label for="medicine_search_${medicineIndex}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Search Medicine:</label>
+                        <select id="medicine_search_${medicineIndex}" name="medicine_search[]" class="px-4 py-2 mt-1 border rounded-md medicine-select dark:bg-gray-700 dark:border-gray-600 dark:text-white"></select>
                     </div>
 
                     <div class="flex-1">
-                        <label for="medicine_name_${medicineIndex}" class="block text-sm font-medium text-gray-700">Medicine Name:</label>
-                        <input type="text" id="medicine_name_${medicineIndex}" name="medicine_name[]" class="border rounded-md px-4 py-2 mt-1" readonly tabindex="-1">
+                        <label for="medicine_name_${medicineIndex}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Medicine Name:</label>
+                        <input type="text" id="medicine_name_${medicineIndex}" name="medicine_name[]" class="px-4 py-2 mt-1 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white" readonly tabindex="-1">
                     </div>
 
                     <div class="flex-1">
-                        <label for="generic_name_${medicineIndex}" class="block text-sm font-medium text-gray-700">Generic Name:</label>
-                        <input type="text" id="generic_name_${medicineIndex}" name="generic_name[]" class="border rounded-md px-4 py-2 mt-1" readonly tabindex="-1">
+                        <label for="generic_name_${medicineIndex}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Generic Name:</label>
+                        <input type="text" id="generic_name_${medicineIndex}" name="generic_name[]" class="px-4 py-2 mt-1 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white" readonly tabindex="-1">
                     </div>
 
                     <div class="flex-1">
-                        <label for="quantity_${medicineIndex}" class="block text-sm font-medium text-gray-700">Quantity:</label>
-                        <input type="number" id="quantity_${medicineIndex}" name="quantity[]" class="border rounded-md px-4 py-2 mt-1" min="1">
+                        <label for="quantity_${medicineIndex}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Quantity:</label>
+                        <input type="number" id="quantity_${medicineIndex}" name="quantity[]" class="px-4 py-2 mt-1 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white" min="1">
                     </div>
 
                     <div class="ml-4">
-                        <button type="button" class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded" onclick="removeMedicineField(${medicineIndex})">Remove</button>
+                        <button type="button" class="px-4 py-2 font-bold text-white bg-red-600 rounded hover:bg-red-800 dark:bg-red-500 dark:hover:bg-red-700" onclick="removeMedicineField(${medicineIndex})">Remove</button>
                     </div>
 
                     <div class="flex-1">
-                        <label class="block text-sm font-medium text-gray-700">Available Quantity:</label>
-                        <p id="available_quantity_${medicineIndex}" class="text-sm text-gray-600">--</p>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Available Quantity:</label>
+                        <p id="available_quantity_${medicineIndex}" class="text-sm text-gray-600 dark:text-gray-400">--</p>
                     </div>
                 </div>
             `;
@@ -176,7 +171,7 @@
 
         function initializeSelect2(index) {
             const medicines = @json($medicines);
-            const generics = @json($generics);
+            const generics = {!! json_encode($generics) !!};
             const selectElement = $(`#medicine_search_${index}`);
 
             const options = medicines.map(med => {
@@ -341,6 +336,4 @@
             }
         });
     </script>
-</body>
-
-</html>
+</x-drugdept.layout>

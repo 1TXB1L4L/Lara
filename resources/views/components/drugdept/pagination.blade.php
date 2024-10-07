@@ -1,14 +1,15 @@
+
 @if ($paginator->hasPages())
 
-    <div class="inline-flex items-center justify-center gap-3 my-4 text-sm">
+    <div class="inline-flex items-center justify-center gap-3 my-4 text-sm dark:text-gray-300">
 
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
-            <span class="text-gray-500">Prev Page</span>
+            <span class="text-gray-500 dark:text-gray-400">Prev Page</span>
         @else
             <a
                 href="{{ $paginator->previousPageUrl() }}"
-                class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900"
+                class="inline-flex items-center justify-center text-gray-900 bg-white border border-gray-100 rounded size-8 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
             >
                 <span class="sr-only">Prev Page</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-3" viewBox="0 0 20 20" fill="black">
@@ -22,7 +23,7 @@
         @endif
 
         {{-- Current Page / Total Pages Info --}}
-        <p class="text-xs text-gray-900">
+        <p class="text-xs text-gray-900 dark:text-gray-300">
             {{ $paginator->currentPage() }} <span class="mx-0.25">/</span> {{ $paginator->lastPage() }}
         </p>
 
@@ -30,7 +31,7 @@
         @if ($paginator->hasMorePages())
             <a
                 href="{{ $paginator->nextPageUrl() }}"
-                class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900"
+                class="inline-flex items-center justify-center text-gray-900 bg-white border border-gray-100 rounded size-8 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
             >
                 <span class="sr-only">Next Page</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-3" viewBox="0 0 20 20" fill="currentColor">
@@ -42,7 +43,7 @@
                 </svg>
             </a>
         @else
-            <span class="text-gray-500">Next Page</span>
+            <span class="text-gray-500 dark:text-gray-400">Next Page</span>
         @endif
 
     </div>

@@ -28,9 +28,7 @@ class ExpenseController extends Controller
     public function create()
     {
         $wards = Ward::where('ward_status', 1)->get();
-        $medicines = Medicine::where('status', 1)->where('quantity', '>', 0)->orderBy('name')->get();
-        $generics = Generic::where('generic_status', 1)->get();
-        return view('drugDept.expense.create', compact('wards', 'medicines', 'generics'));
+        return view('drugDept.expense.create', compact('wards'));
     }
 
     /**
@@ -77,9 +75,7 @@ class ExpenseController extends Controller
     {
         $expense = Expense::findOrFail($id);
         $wards = Ward::where('ward_status', 1)->get();
-        $medicines = Medicine::where('status', 1)->where('quantity', '>', 0)->orderBy('name')->get();
-        $generics = Generic::where('status', 1)->get();
-        return view('drugDept.expense.edit', compact('expense', 'wards', 'medicines', 'generics'));
+        return view('drugDept.expense.edit', compact('expense', 'wards'));
     }
 
     /**

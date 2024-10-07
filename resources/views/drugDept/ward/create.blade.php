@@ -2,9 +2,9 @@
     <div class="container">
 
         <div class="container p-4 mx-auto">
-            <h1 class="text-2xl font-bold text-center mb-4">Edit Wards Details</h1>
+            <h1 class="mb-4 text-2xl font-bold text-center">Create New Ward Record</h1>
             <a href="{{ URL::previous() }}"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back</a>
+                class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Back</a>
             <br />
             <br />
             <div class="mx-auto w-full max-w-[550px] p-3 shadow-lg rounded-md">

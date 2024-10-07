@@ -1,74 +1,62 @@
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-white">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Create Expense</title>
-</head>
-
-<body class="h-full">
-    <div class="container p-24 mx-auto">
-        <h1 class="text-2xl font-bold text-center mb-4">Create Expense</h1>
-        <hr>
-        <br />
-        <a href="/expense/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back</a>
-    </div>
-
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    @if (session('error'))
-        <!-- center and some margin and padding on sides-->
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mx-auto w-1/2 mt-10" role="alert">
-            <strong class="font-bold">Error!</strong>
-            <span class="block sm:inline">{{ session('error') }}</span>
+<x-drugdept.layout title="Create Expense">
+    <div class="container">
+        <div class="p-4 pt-10 mx-auto">
+            <h1 class="mb-4 text-2xl font-bold text-center text-gray-800 dark:text-white">Enter Expense Details</h1>
+            <a href="{{ URL::previous() }}"
+                class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-800" autofocus>Back</a>
+            <br />
+            <div class="mx-auto w-full max-w-[550px] p-3 shadow-lg rounded-md bg-white dark:bg-gray-800">
+                <form method="POST" action="{{ route('expense.store') }}">
+                    @csrf
+                    <div class="mb-5">
+                        <label for="date" class="mb-3 block text-base font-medium text-[#07074D] dark:text-gray-300">
+                             Date
+                        </label>
+                        <input type="date" name="date" id="date"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md placeholder:opacity-70 placeholder-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+                            value="{{ old('date') }}" />
+                        @error('date')
+                            <span class="text-red-500 dark:text-red-400">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-5">
+                        <label for="ward_id" class="mb-3 block text-base font-medium text-[#07074D] dark:text-gray-300">
+                            Ward
+                        </label>
+                        <select name="ward_id" id="ward_id"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] focus:border-[#6A64F1] focus:shadow-md placeholder:opacity-70 placeholder-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:border-blue-500">
+                            <option value="" disabled>Select Ward</option>
+                            @foreach ($wards as $ward)
+                                <option value="{{ $ward->id }}" {{ $ward->id == old('ward_id') ? 'selected' : '' }}>
+                                    {{ $ward->ward_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('ward_id')
+                            <span class="text-red-500 dark:text-red-400">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-5">
+                        <label for="note" class="mb-3 block text-base font-medium text-[#07074D] dark:text-gray-300">
+                            Note
+                        </label>
+                        <textarea name="note" id="note" placeholder="Any Note"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] focus:border-[#6A64F1] focus:shadow-md placeholder:opacity-70 placeholder-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:border-blue-500">{{ old('note') }}</textarea>
+                        @error('note')
+                            <span class="text-red-500 dark:text-red-400">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
+                        <button
+                            class="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none hover:bg-[#5b54e0] dark:bg-[#5b54e0] dark:hover:bg-[#4a44cf]">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    @endif
-    @if (session('status'))
-        <!-- center and some margin and padding on sides-->
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mx-auto w-1/2 mt-10" role="alert">
-            <strong class="font-bold">Success!</strong>
-            <span class="block sm:inline">{{ session('status') }}</span>
-        </div>
-    @endif
-        <form class="space-y-6" action="{{ route('expense.store') }}" method="POST">
-            @csrf
-            <div>
-                <label for="date" class="block text-sm font-medium leading-6 text-gray-900">Date</label>
-                <div class="mt-2">
-                    <input id="date" name="date" type="date" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 @error('date') border-red-500 @enderror" value="{{ old('date') }}">
-                    @error('date') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
-                </div>
-            </div>
-            <div>
-                <label for="ward_id" class="block text-sm font-medium leading-6 text-gray-900">Ward</label>
-                <div class="mt-2">
-                    <select id="ward_id" name="ward_id" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    <!-- make it not selectable -->
-                        <option value="" disabled selected>Select Ward</option>
-                        @foreach($wards as $ward)
-                        <option value="{{ $ward->id }}">{{ $ward->ward_name }}</option>
-                        @endforeach
-                    </select>
-                    @error('ward_id') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
-                </div>
-            </div>
-            <div>
-                <label for="note" class="block text-sm font-medium leading-6 text-gray-900">Note</label>
-                <div class="mt-2">
-                    <input id="note" name="note" type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('note') }}">
-                    @error('note') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
-                </div>
-            </div>
-            <div>
-                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
-            </div>
-        </form>
     </div>
-
     <script>
         document.getElementById('date').valueAsDate = new Date();
     </script>
-</body>
-
-</html>
+</x-drugdept.layout>
