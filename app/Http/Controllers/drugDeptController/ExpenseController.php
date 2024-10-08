@@ -17,7 +17,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $records = Expense::orderByDesc('date')->paginate(11);
+        $records = Expense::orderByDesc('date')->paginate(12);
         $expenseRecords = ExpenseRecord::all();
         return view('drugDept.expense.index', compact('records', 'expenseRecords'));
     }
@@ -27,7 +27,7 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $wards = Ward::where('ward_status', 1)->get();
+        $wards = Ward::orderBy('ward_name', 'asc')->where('ward_status', 1)->get();
         return view('drugDept.expense.create', compact('wards'));
     }
 
@@ -74,7 +74,7 @@ class ExpenseController extends Controller
     public function edit(string $id)
     {
         $expense = Expense::findOrFail($id);
-        $wards = Ward::where('ward_status', 1)->get();
+        $wards = Ward::orderBy('ward_name', 'asc')->where('ward_status', 1)->get();
         return view('drugDept.expense.edit', compact('expense', 'wards'));
     }
 

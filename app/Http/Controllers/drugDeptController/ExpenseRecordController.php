@@ -4,6 +4,7 @@ namespace App\Http\Controllers\drugDeptController;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Expense;
 use App\Models\ExpenseRecord;
 use App\Models\Medicine;
 use App\Models\Generic;
@@ -24,12 +25,13 @@ class ExpenseRecordController extends Controller
      */
     public function create(Request $request)
     {
+        $expense = Expense::findOrFail($request->expense_id);
         $message = request('success');
         $expense_id = request('expense_id');
         $medicines = Medicine::where('status', 1)->where('quantity', '>', 0)->orderBy('name')->get();
         $generics = Generic::all();
 
-        return view('drugDept.expense.createRecord', compact('message', 'expense_id', 'medicines', 'generics'));
+        return view('drugDept.expense.createRecord', compact('message', 'expense', 'expense_id', 'medicines', 'generics'));
     }
 
     /**

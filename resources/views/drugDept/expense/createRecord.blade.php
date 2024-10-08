@@ -93,7 +93,7 @@
         }
     </style>
     <div class="p-6 mx-auto">
-        <h1 class="mb-8 text-4xl font-bold text-center text-gray-800 dark:text-white">Create New Record</h1>
+        <h1 class="mb-8 text-4xl font-bold text-center text-gray-800 dark:text-white">Create New Record <span class="text-sm text-gray-400">({{ $expense->ward->ward_name }} - {{ \Carbon\Carbon::parse($expense->date)->format('d-m-Y') }})</span></h1>
         <hr class="mb-6 border-gray-300 dark:border-gray-600">
 
         <a href="{{ route('expense.index') }}" class="inline-block px-4 py-2 mb-6 font-bold text-white bg-blue-600 rounded hover:bg-blue-800 dark:bg-blue-500 dark:hover:bg-blue-700" autofocus>Back</a>
