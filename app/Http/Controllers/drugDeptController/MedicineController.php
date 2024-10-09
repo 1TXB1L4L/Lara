@@ -35,6 +35,7 @@ class MedicineController extends Controller
         ]);
     }
 
+
     /**
      * Show the form for creating a new resource.
      */
@@ -198,5 +199,20 @@ class MedicineController extends Controller
         }
         $medicine->delete();
         return redirect('/medicines')->with('info', 'Medicine deleted successfully.');
+    }
+
+    public function total()
+    {
+        $medicines = Medicine::where('status', 1)->get();
+    
+        return view('drugDept.medicine.total', [
+            'medicines' => $medicines,
+        ]);
+    }
+
+    public function let()
+    {
+        $medicines = Medicine::all();
+        dd($medicines);
     }
 }

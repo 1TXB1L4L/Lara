@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Models\Generic;
+use App\Models\ExpenseRecord;
 
 class Medicine extends Model
 {
@@ -37,5 +39,21 @@ class Medicine extends Model
     public function generic()
     {
         return $this->belongsTo(Generic::class);
+    }
+
+    public function getTotalUsedAttribute()
+    {
+        $total = 0;
+        $records = ExpenseRecord::where('medicine_id', $this->id)->get();
+        foreach ($records as $record) {
+            $total += $record->quantity;
+        }
+        return $total;
+    }
+
+    public function getResultAttribute()
+    {
+        $records = ExpenseRecord::where('medicine_id', $this->id)->where('expense_id', 1)->get();
+        return $records->quantity;
     }
 }

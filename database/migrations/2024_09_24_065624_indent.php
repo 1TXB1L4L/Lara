@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     public function up(): void
     {
         Schema::create('indents', function (Blueprint $table) {
@@ -13,16 +14,14 @@ return new class extends Migration
             $table->foreignId('medicine_id')->constrained();
             $table->string('medicine_name');
             $table->string('generic_name');
-            $table->unsignedInteger('quantity'); // Assuming quantities should be non-negative
+            $table->unsignedInteger('quantity'); 
             $table->date('indent_date');
-            $table->enum('indent_status', ['Active', 'Inactive']); // Enum for better control over status
-            $table->string('indent_remarks')->nullable();
-            $table->unsignedInteger('previous_quantity')->nullable(); // Nullable and non-negative
-            $table->string('batch_number')->nullable(); // Changed from "batch no." to follow naming conventions
-            $table->date('expiry_date')->nullable();
-            $table->boolean('received')->default(false);
+            $table->string('indent_status');
+            $table->string('notes')->nullable();
+            $table->string('is_received')->default(0);
             $table->foreignId('user_id')->constrained();
-            $table->boolean('is_returned')->default(false);
+            $table->string('is_returned')->default(0);
+            $table->string('returned_reason')->nullable();
             $table->timestamps();
 
             // Indexing common fields for performance

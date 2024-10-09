@@ -37,6 +37,8 @@ Route::middleware([
 Route::middleware('role:admin')->group(function () {
     Route::resource('wards', WardController::class);
     Route::resource('medicines', MedicineController::class);
+    Route::get('medicines/total', [MedicineController::class, 'total'])->name('medicines.total');
+    Route::get('medicines/let', [MedicineController::class, 'total'])->name('medicines.let');
     Route::resource('generics', GenericController::class);
     Route::resource('indents', IndentController::class);
     Route::resource('expenseRecord', ExpenseRecordController::class);
