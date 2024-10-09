@@ -201,18 +201,24 @@ class MedicineController extends Controller
         return redirect('/medicines')->with('info', 'Medicine deleted successfully.');
     }
 
-    public function total()
+    public function total(Request $request)
     {
-        $medicines = Medicine::where('status', 1)->get();
-    
+        $query = Medicine::query();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'LIKE', "%{$searchTerm}%")
+                    ->orWhereHas('generic', function ($q) use ($searchTerm) {
+                        $q->where('generic_name', 'LIKE', "%{$searchTerm}%");
+                    });
+            });
+        }
+
+        $medicines = $query->orderBy('name')->paginate(25);
+
         return view('drugDept.medicine.total', [
             'medicines' => $medicines,
         ]);
-    }
-
-    public function let()
-    {
-        $medicines = Medicine::all();
-        dd($medicines);
     }
 }

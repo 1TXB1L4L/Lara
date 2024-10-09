@@ -54,6 +54,13 @@ class Medicine extends Model
     public function getResultAttribute()
     {
         $records = ExpenseRecord::where('medicine_id', $this->id)->where('expense_id', 1)->get();
-        return $records->quantity;
+        if ($records->count() > 0) {
+            $total = 0;
+            foreach ($records as $record) {
+                $total += $record->quantity;
+            }
+            return $total;
+        }
+        return 0;
     }
 }

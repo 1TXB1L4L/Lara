@@ -4,6 +4,17 @@
             <h1 class="mb-4 text-2xl font-bold text-center">Total Usage of medicine</h1>
             <br />
             <br />
+            <form action="{{ route('medicines.index') }}" method="GET" class="mb-4">
+                <div class="flex items-center">
+                    <input type="text" name="search" placeholder="Search by medicine or generic name"
+                           class="w-full px-4 py-2 border rounded-l"
+                           value="{{ request('search') }}">
+                    <button type="submit"
+                            class="px-4 py-2 font-bold text-white bg-blue-500 rounded-r hover:bg-blue-700">
+                        Search
+                    </button>
+                </div>
+            </form>
             <div class="border border-gray-200 rounded-lg">
                 <div class="overflow-x-auto rounded-t-lg">
                     <table class="min-w-full text-sm bg-white divide-y-2 divide-gray-200">
@@ -12,7 +23,7 @@
                                 <th class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">Sr No.</th>
                                 <th class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">Medicine Name</th>
                                 <th class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">Generic Name</th>
-                                <th class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">Old Quantity</th>                                <th class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">Image</th>
+                                <th class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">Old Quantity</th>
                                 <th class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">Total Used</th>
                             </tr>
                         </thead>
