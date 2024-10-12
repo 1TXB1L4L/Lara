@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('medicine_logs', function (Blueprint $table) {
             $table->id();
-            $table->enum('log_type', ['approve', 'reject', 'panding', 'return'])->default('pending');
+            $table->enum('log_type', ['approve', 'reject', 'panding', 'return'])->default('panding');
             $table->foreignId('medicine_id')->constrained()->onDelete('cascade');
             $table->unsignedInteger('quantity');
             $table->date('date');
