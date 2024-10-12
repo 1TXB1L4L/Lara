@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('medicine_logs', function (Blueprint $table) {
             $table->id();
-            $table->enum('log_type', ['approve', 'reject', 'panding', 'return'])->default('panding');
-            $table->foreignId('medicine_id')->constrained()->onDelete('cascade');
+            $table->enum('log_type', ['approve', 'reject', 'pending', 'return'])->default('pending');
+            $table->unsignedBigInteger('medicine_id');
+            $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
             $table->unsignedInteger('quantity');
             $table->date('date');
             $table->string('notes')->nullable();
