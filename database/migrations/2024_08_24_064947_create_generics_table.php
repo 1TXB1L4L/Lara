@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('generics', function (Blueprint $table) {
             $table->id();
-            $table->string('generic_name');
+            $table->string('generic_name')->unique();
             $table->string('generic_description')->nullable();
             $table->boolean('generic_status')->default(1);
             $table->string('generic_notes')->nullable();

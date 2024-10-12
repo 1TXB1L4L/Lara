@@ -155,7 +155,7 @@ class ExpenseRecordController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'Record deleted successfully');
+            return redirect()->back()->with('info', 'Record deleted successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());

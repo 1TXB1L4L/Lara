@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('generic_name');
             $table->integer('quantity');
             $table->timestamps();
+            $table->unique(['medicine_id', 'expense_id']);
         });
     }
 

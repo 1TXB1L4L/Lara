@@ -4,7 +4,7 @@
             <h1 class="mb-4 text-2xl font-bold text-center">Total Usage of medicine</h1>
             <br />
             <br />
-            <form action="{{ route('medicines.index') }}" method="GET" class="mb-4">
+            <form action="{{ route('medicines.total') }}" method="GET" class="mb-4">
                 <div class="flex items-center">
                     <input type="text" name="search" placeholder="Search by medicine or generic name"
                            class="w-full px-4 py-2 border rounded-l"

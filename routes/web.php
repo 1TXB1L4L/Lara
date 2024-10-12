@@ -6,7 +6,6 @@ use App\Http\Controllers\drugDeptController\MedicineController;
 use App\Http\Controllers\drugDeptController\ExpenseController;
 use App\Http\Controllers\drugDeptController\GenericController;
 use App\Http\Controllers\drugDeptController\ExpenseRecordController;
-use App\Http\Controllers\drugDeptController\IndentController;
 use App\Http\Controllers\ExecuteCommandController;
 
 Route::get('/', function () {
@@ -37,15 +36,14 @@ Route::middleware([
 Route::middleware('role:admin')->group(function () {
     Route::resource('wards', WardController::class);
     Route::get('medicines/total', [MedicineController::class, 'total'])->name('medicines.total');
+    Route::post('/medicines/{medicine}/add-stock', [MedicineController::class, 'AddStock'])->name('medicines.addStock');
+    Route::get('medicines/hmis', [MedicineController::class, 'totalAdd'])->name('medicines.totalAdd');
+    Route::post('medicines/hmis', [MedicineController::class, 'totalAddStore'])->name('medicines.totalAddStore');
     Route::resource('medicines', MedicineController::class);
     Route::resource('generics', GenericController::class);
-    Route::resource('indents', IndentController::class);
     Route::resource('expenseRecord', ExpenseRecordController::class);
     Route::resource('expense', ExpenseController::class);
     Route::get('expenseRecord/create/{expense_id}', [ExpenseRecordController::class, 'create'])->name('expenseRecord.create');
-    Route::put('indents/{indent}/approve', [IndentController::class, 'approve'])->name('indents.approve');
-    Route::put('indents/{indent}/reject', [IndentController::class, 'reject'])->name('indents.reject');
-    Route::put('indents/{indent}/set-pending', [IndentController::class, 'setPending'])->name('indents.setPending');
     Route::put('expenseRecord/{id}', [ExpenseRecordController::class, 'update'])->name('expenseRecord.update');
     Route::delete('expenseRecord/{id}', [ExpenseRecordController::class, 'destroy'])->name('expenseRecord.destroy');
 });

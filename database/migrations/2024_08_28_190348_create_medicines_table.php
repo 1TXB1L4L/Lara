@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('medicines', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('description')->nullable();
             $table->foreignId('generic_id')->constrained('generics')->cascadeOnDelete();
             $table->integer('quantity')->nullable();

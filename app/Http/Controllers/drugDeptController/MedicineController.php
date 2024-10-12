@@ -7,6 +7,8 @@ use App\Models\Medicine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Models\Generic;
+use App\Models\Medicine_log;
+use Illuminate\Support\Facades\DB;
 
 
 class MedicineController extends Controller
@@ -220,5 +222,86 @@ class MedicineController extends Controller
         return view('drugDept.medicine.total', [
             'medicines' => $medicines,
         ]);
+    }
+    /**
+     * Add stock to the specified medicine.
+     */
+    public function AddStock(Request $request, Medicine $medicine)
+    {
+        $request->validate([
+            'quantity' => 'required|integer',
+            'log_type' => 'required|string|max:255',
+            'expiry_date' => 'required|date',
+            'date' => 'required|date',
+            'notes' => 'nullable|string|max:255',
+            'medicine_id' => 'required|integer',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            if ($request->log_type == 'approve') {
+                $medicine->increment('quantity', $request->quantity);
+                $medicine->expiry_date = $request->expiry_date;
+                $medicine->total_quantity += $request->quantity;
+            } elseif ($request->log_type == 'return') {
+                $medicine->decrement('quantity', $request->quantity);
+            }
+
+            $medicine->save();
+
+            $medicineLog = Medicine_log::create([
+                'log_type' => $request->log_type,
+                'medicine_id' => $request->medicine_id,
+                'quantity' => $request->quantity,
+                'date' => $request->date,
+                'notes' => $request->notes,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Stock updated successfully.',
+                'new_quantity' => $medicine->quantity,
+                'log' => $medicineLog
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function totalAdd()
+    {
+        // add paginatiom
+        $medicines = Medicine::orderBy('name')->paginate(25);
+        return view('drugDept.medicine.hmis', compact('medicines'));
+    }
+
+    public function totalAddStore(Request $request)
+    {
+        $request->validate([
+            'quantity' => 'required|integer',
+            'medicine_id' => 'required|integer',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $medicine = Medicine::find($request->medicine_id);
+            $medicine->total_quantity += $request->quantity;
+            $medicine->save();
+
+            DB::commit();
+
+            return redirect('/medicines/hmis')->with('success', 'Stock updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 }

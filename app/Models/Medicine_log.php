@@ -17,16 +17,11 @@ class Medicine_log extends Model
         'quantity',
         'date',
         'notes',
-        'ref_id',
     ];
 
     public function medicine()
     {
         return $this->belongsTo(Medicine::class, 'medicine_id');
     }
-
-    public function ref()
-    {
-        return $this->belongsTo(Indent::class, 'ref_id');
-    }
+    
 }
