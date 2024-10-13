@@ -246,6 +246,7 @@ class MedicineController extends Controller
                 $medicine->total_quantity += $request->quantity;
             } elseif ($request->log_type == 'return') {
                 $medicine->decrement('quantity', $request->quantity);
+                $medicine->total_quantity -= $request->quantity;
             }
 
             $medicine->save();
@@ -277,9 +278,23 @@ class MedicineController extends Controller
 
     public function totalAdd()
     {
-        // add paginatiom
-        $medicines = Medicine::orderBy('name')->paginate(25);
-        return view('drugDept.medicine.hmis', compact('medicines'));
+        $query = Medicine::query();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'LIKE', "%{$searchTerm}%")
+                    ->orWhereHas('generic', function ($q) use ($searchTerm) {
+                        $q->where('generic_name', 'LIKE', "%{$searchTerm}%");
+                    });
+            });
+        }
+
+        $medicines = $query->orderBy('name')->paginate(25);
+
+        return view('drugDept.medicine.hmis', [
+            'medicines' => $medicines,
+        ]);
     }
 
     public function totalAddStore(Request $request)
