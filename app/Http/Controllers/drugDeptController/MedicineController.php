@@ -276,7 +276,7 @@ class MedicineController extends Controller
         }
     }
 
-    public function totalAdd()
+    public function totalAdd(Request $request)
     {
         $query = Medicine::query();
 
