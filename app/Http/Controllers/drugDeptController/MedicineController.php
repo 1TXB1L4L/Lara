@@ -86,6 +86,7 @@ class MedicineController extends Controller
                 'description' => $request->description,
                 'generic_id' => $request->generic_id,
                 'quantity' => $request->quantity,
+                'total_quantity' => $request->quantity,
                 'price' => $request->price,
                 'batch_no' => $request->batch_no,
                 'dosage' => $request->dosage,
